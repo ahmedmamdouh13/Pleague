@@ -1,10 +1,10 @@
-package com.ahmedmamdouh13.theleague.custom
+package com.ahmedmamdouh13.theleague.ui.custom
 
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import com.ahmedmamdouh13.theleague.Constants.notAvailable
+import com.ahmedmamdouh13.theleague.ui.Constants.notAvailable
 
 class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context,attrs) {
     constructor(context: Context) : this(context,null)
