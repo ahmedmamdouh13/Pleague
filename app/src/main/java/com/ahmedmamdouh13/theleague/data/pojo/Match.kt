@@ -7,39 +7,39 @@ class Match {
 
     @SerializedName("id")
     @Expose
-    var id: Int? = null
+    var id: Int = 0
     @SerializedName("season")
     @Expose
-    var season: Season? = null
+    var season: Season = Season()
     @SerializedName("utcDate")
     @Expose
-    var utcDate: String? = null
+    var utcDate: String = ""
     @SerializedName("status")
     @Expose
-    var status: String? = null
+    var status: String = ""
     @SerializedName("matchday")
     @Expose
-    var matchday: Int? = null
+    var matchday: Int = 0
     @SerializedName("stage")
     @Expose
-    var stage: String? = null
+    var stage: String = ""
     @SerializedName("group")
     @Expose
-    var group: String? = null
+    var group: String = ""
     @SerializedName("lastUpdated")
     @Expose
-    var lastUpdated: String? = null
+    var lastUpdated: String = ""
     @SerializedName("score")
     @Expose
-    var score: Score? = null
+    var score: Score = Score()
     @SerializedName("homeTeam")
     @Expose
-    var homeTeam: HomeTeam? = null
+    var homeTeam: HomeTeam = HomeTeam()
     @SerializedName("awayTeam")
     @Expose
-    var awayTeam: AwayTeam? = null
+    var awayTeam: AwayTeam = AwayTeam()
     @SerializedName("referees")
     @Expose
-    var referees: List<Referee>? = null
+    var referees: List<Referee> = listOf()
 
 }

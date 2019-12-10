@@ -7,21 +7,21 @@ class Score {
 
     @SerializedName("winner")
     @Expose
-    var winner: String? = null
+    var winner: String = ""
     @SerializedName("duration")
     @Expose
-    var duration: String? = null
+    var duration: String = ""
     @SerializedName("fullTime")
     @Expose
-    var fullTime: FullTime? = null
+    var fullTime: FullTime = FullTime()
     @SerializedName("halfTime")
     @Expose
-    var halfTime: HalfTime? = null
+    var halfTime: HalfTime = HalfTime()
     @SerializedName("extraTime")
     @Expose
-    var extraTime: ExtraTime? = null
+    var extraTime: ExtraTime = ExtraTime()
     @SerializedName("penalties")
     @Expose
-    var penalties: Penalties? = null
+    var penalties: Penalties = Penalties()
 
 }

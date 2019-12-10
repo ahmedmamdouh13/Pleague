@@ -7,9 +7,9 @@ class HalfTime {
 
     @SerializedName("homeTeam")
     @Expose
-    var homeTeam: Int? = null
+    var homeTeam: Int = 0
     @SerializedName("awayTeam")
     @Expose
-    var awayTeam: Int? = null
+    var awayTeam: Int = 0
 
 }

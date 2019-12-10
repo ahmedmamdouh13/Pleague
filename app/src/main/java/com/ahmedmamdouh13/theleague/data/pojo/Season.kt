@@ -7,15 +7,15 @@ class Season {
 
     @SerializedName("id")
     @Expose
-    var id: Int? = null
+    var id: Int = 0
     @SerializedName("startDate")
     @Expose
-    var startDate: String? = null
+    var startDate: String = ""
     @SerializedName("endDate")
     @Expose
-    var endDate: String? = null
+    var endDate: String = ""
     @SerializedName("currentMatchday")
     @Expose
-    var currentMatchday: Int? = null
+    var currentMatchday: Int = 0
 
 }

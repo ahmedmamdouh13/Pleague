@@ -1,6 +1,6 @@
 package com.ahmedmamdouh13.theleague.ui.di.module
 
-import com.ahmedmamdouh13.theleague.data.RepositoryImpl
+import com.ahmedmamdouh13.theleague.data.repo.RepositoryImpl
 import com.ahmedmamdouh13.theleague.domain.Repository
 import com.ahmedmamdouh13.theleague.domain.interactor.MatchesInteractor
 import com.ahmedmamdouh13.theleague.domain.usecase.GetMatchesUseCase

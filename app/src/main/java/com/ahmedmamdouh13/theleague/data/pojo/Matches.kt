@@ -7,6 +7,6 @@ class Matches {
 
     @SerializedName("matches")
     @Expose
-    var matches: List<Match>? = null
+    var matches: List<Match> = listOf()
 
 }
