@@ -13,7 +13,6 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
     var textPaint=Paint()
     var mx=0f
     var my=0f
-    var vol=0f
     var team1Name="team1"
     var team2Name="team2"
     var textSize=30f
@@ -24,7 +23,6 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
     var teamsgroup= notAvailable
     var matchResult1= notAvailable
 
-    var isFirstBlock=true
 
 
 
@@ -60,7 +58,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
         my=(height/4).toFloat()
 
         canvas.translate(0f,-10f)
-//        canvas.drawText(teamsgroup,0f,0f,paint)
+        canvas.drawText(teamsgroup,0f,0f,paint)
         canvas.translate(0f,10f)
 
 
@@ -128,7 +126,6 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
                     !isMatchPlayed -> {
 
                         canvas.drawText(dateText1, 0f, my , textPaint) //match time text
-//                        canvas.drawText(datetext2, 0f, my / 6, textPaint) //time text
 
                     }
                     else -> //canvas?.translate(0f, 30f)

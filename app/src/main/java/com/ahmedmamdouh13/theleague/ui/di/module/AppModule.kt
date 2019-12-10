@@ -1,8 +1,12 @@
 package com.ahmedmamdouh13.theleague.ui.di.module
 
+import com.ahmedmamdouh13.theleague.data.RepositoryImpl
+import com.ahmedmamdouh13.theleague.domain.Repository
+import com.ahmedmamdouh13.theleague.domain.interactor.MatchesInteractor
+import com.ahmedmamdouh13.theleague.domain.usecase.GetMatchesUseCase
+import com.ahmedmamdouh13.theleague.ui.di.scope.AppScope
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 
 @Module
@@ -10,9 +14,12 @@ class AppModule {
 
 
     @Provides
-    @Singleton
-    fun providesRepo():String{
+    @AppScope
+    fun providesMatchesInteractor(getMatchesUseCase: GetMatchesUseCase): MatchesInteractor = getMatchesUseCase
 
-        return "Repo"
-    }
+    @Provides
+    @AppScope
+    fun providesRepository(repositoryImpl: RepositoryImpl): Repository = repositoryImpl
+
+
 }
