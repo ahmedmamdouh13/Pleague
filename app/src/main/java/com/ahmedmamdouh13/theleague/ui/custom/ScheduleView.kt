@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.Constants.notAvailable
 
 class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context,attrs) {
@@ -28,14 +30,14 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
     init {
         this.setWillNotDraw(false)
-        paint.color=Color.parseColor("#004D40")
+        paint.color = ContextCompat.getColor(context, R.color.colorAccent)
         paint.textAlign=Paint.Align.CENTER
         paint.textSize=textSize
         paint.isFakeBoldText=true
         paint.strokeWidth=5f
         paint.isAntiAlias=true
 
-        textPaint.color=Color.parseColor("#000000")
+        textPaint.color = ContextCompat.getColor(context,android.R.color.white)
         textPaint.textAlign=Paint.Align.CENTER
         textPaint.strokeWidth=10f
         textPaint.textSize=textSize
@@ -109,14 +111,22 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
                 canvas.translate(-mx-mx,0f)
                 canvas.translate(-mx/4,my/4)
 
+        if (team1Name.length < 20)
                 canvas.drawText(team1Name,-mx/4,my ,textPaint) //left team text name
+        else {
+            drawLayeredText(team1Name, canvas, -mx/4, my , textPaint)
+        }
 
                 canvas.restore()
 
                 canvas.save()
                 canvas.translate(-mx/2,my/2)
                 canvas.translate(mx/4,my/4)
-                canvas.drawText(team2Name,mx/4,my ,textPaint) //right team text name
+
+        if (team2Name.length < 20)
+        canvas.drawText(team2Name,mx/4,my ,textPaint) //right team text name
+        else
+            drawLayeredText(team2Name, canvas, mx/4, my , textPaint)
 
                 canvas.restore()
                 canvas.save()
@@ -133,5 +143,33 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
                 }
                 canvas.restore()
         }
+
+    private fun drawLayeredText(
+        team1Name: String,
+        canvas: Canvas,
+        mx: Float,
+        my: Float,
+        textPaint: Paint
+    ) {
+        val layers = team1Name.split(" ")
+        var separator = 0
+//        if (layers.size <= 3)
+//        for (t in layers) {
+//            separator += 2
+//            canvas.drawText(t, mx, (my/4) * separator, textPaint)
+//        }
+//        else
+
+        if (layers.first().length < 10 ) {
+            canvas.drawText(layers.first() + " " + layers[1], mx, my, textPaint)
+            canvas.drawText(layers.last(), mx, my + textSize, textPaint)
+        }
+        else{
+            canvas.drawText(layers.first(), mx, my, textPaint)
+            canvas.drawText(layers[1], mx, my + textSize, textPaint)
+            canvas.drawText(layers.last(), mx, my + textSize * 2, textPaint)
+        }
+
     }
+}
 

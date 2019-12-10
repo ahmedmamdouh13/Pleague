@@ -16,7 +16,7 @@ interface MatchesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMatch(matchEntity: MatchEntity): Long
 
-    @Query("SELECT * FROM `match` WHERE date >= :date LIMIT :pageSize OFFSET :pageIndex")
+    @Query("SELECT * FROM `match` WHERE date >= :date LIMIT :pageSize OFFSET :pageIndex ")
     fun getMatches(pageSize: Int, pageIndex: Int, date: String): Single<List<MatchEntity>>
 
 

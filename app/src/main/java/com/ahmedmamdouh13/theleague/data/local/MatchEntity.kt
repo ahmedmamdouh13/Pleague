@@ -10,7 +10,9 @@ class MatchEntity {
     @PrimaryKey(autoGenerate = false)
     var id = 0
 
-    var score = ""
+    var homeScore = -1
+
+    var awayScore = -1
 
     var date = ""
 

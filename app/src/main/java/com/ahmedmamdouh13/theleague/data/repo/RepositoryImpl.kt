@@ -5,7 +5,6 @@ import com.ahmedmamdouh13.theleague.data.local.MatchesDao
 import com.ahmedmamdouh13.theleague.data.remote.LeagueService
 import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.domain.Repository
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
@@ -21,19 +20,20 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
         val disposable = service.getMatches()
             .subscribeOn(Schedulers.io())
             .subscribe { list, e ->
-            println("here2 ${list.matches[0].utcDate}")
-                val matchesList = list.matches.map { match ->
-                    MatchEntity().apply {
-                        id = match.id
-                        awayTeam = match.awayTeam.name
-                        homeTeam = match.homeTeam.name
-                        date = match.utcDate
-                        score =
-                            "${match.score.fullTime.awayTeam} - ${match.score.fullTime.homeTeam}"
+//            println("here2 ${list.matches[0].utcDate}")
+                if (list != null) {
+                    val matchesList = list.matches.map { match ->
+                        MatchEntity().apply {
+                            id = match.id
+                            awayTeam = match.awayTeam.name
+                            homeTeam = match.homeTeam.name
+                            date = match.utcDate
+                            homeScore = match.score.fullTime.homeTeam
+                            awayScore = match.score.fullTime.awayTeam
+                        }
                     }
+                    dao.insertMatchesList(matchesList)
                 }
-                dao.insertMatchesList(matchesList)
-
         }
         return dao.getMatches(offset, index, todayInUtc)
             .delay(1,TimeUnit.SECONDS)
@@ -45,7 +45,9 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
                     list.awayTeam,
                     list.homeTeam,
                     list.date,
-                    list.score
+                    "",
+                    list.homeScore,
+                    list.awayScore
                 )
 
         }
