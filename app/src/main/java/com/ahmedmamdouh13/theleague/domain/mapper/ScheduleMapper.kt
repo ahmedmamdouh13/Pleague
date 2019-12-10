@@ -7,8 +7,9 @@ import javax.inject.Inject
 class ScheduleMapper @Inject constructor() {
 
     fun getMatchesInScheduleForm(modelList: List<DomainModel>): Map<String, List<DomainModel>>{
-            val map = HashMap<String,ArrayList<DomainModel>>()
+            val map = LinkedHashMap<String,ArrayList<DomainModel>>()
             for (domainModel in modelList) {
+                println(domainModel.date + " ehh b2a hnshof aho")
                 map.getOrPut(domainModel.date,{
                     arrayListOf()
                 }).add(domainModel)

@@ -17,12 +17,14 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
 
     override fun getMatches(size: Int, index: Int): Single<Map<String,List<DomainModel>>>{
        return repository.getMatches(size, index, util.getTodayInUtc())
-          .map  {
-              mapper.getMatchesInScheduleForm( it.map {d ->
+          .map  { domainList ->
+              mapper.getMatchesInScheduleForm( domainList.map {d ->
                   d.time = util.getTimeFromUtcDate(d.date)
                   d.date = util.getDateFromUtcDate(d.date)
                   d
-              })
+              }
+
+              )
           }
     }
 

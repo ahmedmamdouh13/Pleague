@@ -6,14 +6,15 @@ import javax.inject.Inject
 
 class DateUitl @Inject constructor() {
     private val utcDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
     private val mTimeZone: TimeZone = SimpleTimeZone.getDefault()
 
 
     fun getTimeFromUtcDate(date: String): String{
         val timeFormat = SimpleDateFormat("hh:mm a")
         val utcDate = utcDateFormat.parse(date)
-        timeFormat.timeZone = mTimeZone
         println(date)
         println("dateutil")
         return timeFormat.format(utcDate).toString()
@@ -33,25 +34,21 @@ class DateUitl @Inject constructor() {
     }
 
     fun getDateFromUtcDate(date: String): String
-            = dateFormat.format(utcDateFormat
-        .apply { timeZone = mTimeZone }
-        .parse(date))
+            = dateFormat.format(utcDateFormat.parse(date))
 
     fun daysUntilDate(s: String): String {
-        val todayDate = Calendar.getInstance()
+        val todayDate = Calendar.getInstance().time
         val matchDate = dateFormat.parse(s)
 
-        var instance = Calendar.getInstance()
-        instance.time = matchDate
-         val daysMillis = instance.timeInMillis - todayDate.timeInMillis
-        instance.timeInMillis = daysMillis
+         val daysMillis = matchDate.time - todayDate.time
 
-        val secMilli = 1000
+        val secMilli = 1000L
         val minMilli = secMilli * 60
         val hourMilli = minMilli * 60
         val daysMilli =  hourMilli * 24
 
         return "${daysMillis / daysMilli}"
     }
+
 
 }

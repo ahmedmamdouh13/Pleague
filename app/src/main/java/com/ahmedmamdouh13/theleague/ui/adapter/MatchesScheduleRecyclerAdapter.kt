@@ -39,7 +39,7 @@ class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyc
             matchScheduleModel: List<MatchScheduleModel>?,
             date: String
         ) {
-//            itemView.date_textview_item_matchschedule.text = date
+            itemView.date_textview_item_matchschedule.text = date
             itemView.matches_recyclerview_item_matchschedule.layoutManager = LinearLayoutManager(itemView.context,LinearLayoutManager.VERTICAL,false)
             itemView.matches_recyclerview_item_matchschedule.itemAnimator = DefaultItemAnimator()
             itemView.matches_recyclerview_item_matchschedule.adapter = MatchesRecyclerAdapter().apply {

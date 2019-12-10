@@ -14,10 +14,9 @@ class MainViewModel @Inject constructor(matchesInteractor: MatchesInteractor) : 
       val d =   useCase.getMatches(10,0)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe { l , e ->
-
           matchesScheduleLiveData.value = l.mapValues { list ->
               list.value.map {
-                  println(list.key)
+                  println(it.date + " da b3d b2a ")
                   MatchScheduleModel(
                       it.id,
                       it.date,
