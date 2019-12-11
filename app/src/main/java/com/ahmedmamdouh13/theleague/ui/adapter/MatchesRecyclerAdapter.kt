@@ -3,6 +3,7 @@ package com.ahmedmamdouh13.theleague.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
@@ -11,6 +12,8 @@ import kotlinx.android.synthetic.main.item_match.view.*
 class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.MatchesViewHolder>() {
 
     var list: List<MatchScheduleModel> = listOf()
+    var checkToggleListener = MutableLiveData<Int>()
+    var unCheckToggleListener = MutableLiveData<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesViewHolder {
         val view =   LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
@@ -29,15 +32,37 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
         holder.bind(list[position])
     }
 
-    class MatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun setFavoriteListeners(
+        checkListener: MutableLiveData<Int>,
+        unCheckListener: MutableLiveData<Int>
+    ){
+        checkToggleListener = checkListener
+        unCheckToggleListener = unCheckListener
+    }
+
+    inner class MatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        var isChecked = false
 
         init {
-            itemView.favorite_lottieview_itemmatch.setOnClickListener {
-                itemView.favorite_lottieview_itemmatch.playAnimation()
+            itemView.favorite_container_itemmatch.setOnClickListener {
+                if (!isChecked) {
+                    itemView.favorite_lottieview_itemmatch.visibility = View.VISIBLE
+                    itemView.favorite_lottieview_itemmatch.playAnimation()
+                    checkToggleListener.value = list[adapterPosition].id
+                    isChecked = true
+                }
+                else {
+                    itemView.favorite_lottieview_itemmatch.visibility = View.INVISIBLE
+                    unCheckToggleListener.value = list[adapterPosition].id
+                    isChecked = false
+                }
             }
         }
 
         fun bind(matchScheduleModel: MatchScheduleModel) {
+
+
 
             itemView.match_scheduleview_itemmatch.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch.team2Name = matchScheduleModel.awayTeam

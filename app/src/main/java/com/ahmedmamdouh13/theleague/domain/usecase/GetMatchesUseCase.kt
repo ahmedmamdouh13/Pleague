@@ -5,6 +5,7 @@ import com.ahmedmamdouh13.theleague.domain.interactor.MatchesInteractor
 import com.ahmedmamdouh13.theleague.domain.mapper.ScheduleMapper
 import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.domain.util.DateUitl
+import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -35,5 +36,15 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
         else
             util.daysUntilDate(s)
     }
+
+    override fun favoriteFixture(id: Int) {
+        repository.favoriteFixture(id)
+    }
+
+    override fun unFavoriteFixture(id: Int) {
+        repository.unFavoriteFixture(id)
+    }
+
+    override fun getFavoriteMatches(): Flowable<List<DomainModel>> = repository.getFavoriteMatches()
 
 }

@@ -21,4 +21,6 @@ class MatchEntity {
     var awayTeam = ""
 
     var group = ""
+
+    var isFavorite = false
 }

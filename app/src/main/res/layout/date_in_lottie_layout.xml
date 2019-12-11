@@ -10,7 +10,7 @@
 
         >
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -19,7 +19,7 @@
 
             />
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -28,7 +28,7 @@
             />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -37,7 +37,7 @@
             />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -52,7 +52,7 @@
             android:textColor="@color/colorAccent"
             />
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -61,7 +61,7 @@
             />
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -76,7 +76,7 @@
             android:textColor="@color/colorAccent"
             />
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
@@ -84,7 +84,7 @@
             android:id="@+id/number_7_lottieview_itemmatchschedule"
             />
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="25dp"
             app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"

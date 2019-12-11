@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:layout_margin="16dp"
-    android:background="@color/darkbackground"
+    android:layout_margin="20dp"
+    android:background="@drawable/item_shape_border"
 
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/item_shape_border"
         android:id="@+id/container_scheduleview_itemmatch"
 
         >
@@ -28,9 +27,8 @@
             />
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="10dp"
             android:background="@drawable/shape_border"
-            android:alpha="0.5"
             android:id="@+id/border"
             android:layout_above="@id/favorite_container_itemmatch"
             />
@@ -38,7 +36,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/favorite_container_itemmatch"
-            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
 
             android:layout_marginEnd="16dp"

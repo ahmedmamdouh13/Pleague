@@ -1,24 +1,21 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import androidx.core.widget.NestedScrollView
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.date_in_lottie_layout.*
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import javax.inject.Inject
 
@@ -32,8 +29,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
+        viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
+        viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
 
         val adapter = MatchesScheduleRecyclerAdapter().apply {
+            setListener(viewModel.checkToggleListener,viewModel.unCheckToggleListener)
             viewModel.matchesScheduleLiveData.observe(this@MainActivity, Observer {
                 list = it
                 notifyDataSetChanged()
@@ -49,6 +49,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        favorite_screen_activitymain.setOnClickListener {
+            TransitionManager.beginDelayedTransition(favorite_screen_container_activitymain)
+            left_guideline.setGuidelinePercent(0f)
+            right_guideline.setGuidelinePercent(1f)
+            top_guideline.setGuidelinePercent(0f)
+            bottom_guideline.setGuidelinePercent(1f)
+        }
 
 
         matchesschedule_recyclerview_mainactivity.addOnScrollListener(object :

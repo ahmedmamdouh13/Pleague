@@ -1,4 +1,4 @@
-package com.ahmedmamdouh13.theleague.ui
+package com.ahmedmamdouh13.theleague.ui.view
 
 import android.os.Bundle
 import android.view.LayoutInflater

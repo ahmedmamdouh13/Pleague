@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:text="2019 - 12 - 15"
         android:textSize="30sp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:id="@+id/date_textview_item_matchschedule"
-        android:textColor="@color/darkerBackground"
+        android:textColor="@color/lighterdarkBackground"
         />
 <!--   <include layout="@layout/date_in_lottie_layout"-->
 <!--       android:layout_height="wrap_content"-->
