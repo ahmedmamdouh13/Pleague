@@ -10,31 +10,53 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
-
-        android:background="@drawable/primary_color_fade_dark"
-        android:layout_height="wrap_content"
+        android:background="@drawable/fade_blue_photo"
+        android:layout_height="192dp"
         android:layout_width="match_parent">
 
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="The League"-->
-<!--                    android:textSize="30sp"-->
-<!--                    android:layout_gravity="center"-->
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:toolbarId="@+id/toolbar"
+        app:layout_scrollFlags="enterAlways|scroll"
 
-<!--                    android:layout_margin="16dp"-->
-<!--                    android:textStyle="bold"-->
+        app:contentScrim="?attr/colorPrimary">
 
-<!--                    />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+
+        <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_margin="16dp"
+        android:layout_gravity="center"
+        android:src="@drawable/premierleague_logo"
+            />
+
+
+        <TextView
+        android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The League"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:textColor="@android:color/white"
+            />
+    </LinearLayout>
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_width="match_parent"
-                app:title="The League"
 
                 />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -45,7 +67,42 @@
         android:id="@+id/matchesschedule_recyclerview_mainactivity"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:layout_margin="16dp"
+        >
+        <androidx.cardview.widget.CardView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="end"
+            app:cardCornerRadius="32dp"
 
+
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                >
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:id="@+id/days_lottie_mainactivity"
+                    android:layout_gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Days"
+                    android:gravity="center"
+                    android:layout_gravity="bottom|center"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </FrameLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
 import kotlinx.android.synthetic.main.item_match.view.*
-import kotlinx.android.synthetic.main.item_matchschedule.view.*
 
 class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.MatchesViewHolder>() {
 
@@ -42,8 +41,17 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
 
             itemView.match_scheduleview_itemmatch.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch.team2Name = matchScheduleModel.awayTeam
-            itemView.match_scheduleview_itemmatch.matchResult1 =
-                "${matchScheduleModel.homeScore} - ${matchScheduleModel.awayScore}"
+
+            when(matchScheduleModel.homeScore){
+               -1 -> {
+
+                   itemView.match_scheduleview_itemmatch.matchTimeText = matchScheduleModel.time
+               }
+
+                else -> itemView.match_scheduleview_itemmatch.matchResult1 =
+                    "${matchScheduleModel.homeScore} - ${matchScheduleModel.awayScore}"
+
+            }
             itemView.match_scheduleview_itemmatch.invalidate()
 
 //            itemView.match_scheduleview_itemmatch.teamsgroup = matchScheduleModel

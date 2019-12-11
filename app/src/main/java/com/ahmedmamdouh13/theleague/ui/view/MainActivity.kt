@@ -15,6 +15,7 @@ import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
+import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -33,28 +34,39 @@ class MainActivity : AppCompatActivity() {
             viewModel.matchesScheduleLiveData.observe(this@MainActivity, Observer {
                 list = it
                 notifyDataSetChanged()
+                viewModel.daysUntilMatch(it.keys.toList()[0])
+
             })
         }
-        viewModel.testFun()
         var cntFlag = 0
 
         matchesschedule_recyclerview_mainactivity.itemAnimator = DefaultItemAnimator()
         matchesschedule_recyclerview_mainactivity.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
         matchesschedule_recyclerview_mainactivity.adapter = adapter
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            matchesschedule_recyclerview_mainactivity.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
 
 
-                val itemPosition =
-                    (matchesschedule_recyclerview_mainactivity.layoutManager as LinearLayoutManager)
-                        .findFirstVisibleItemPosition()
+        matchesschedule_recyclerview_mainactivity.addOnScrollListener(object :
+                RecyclerView.OnScrollListener(){
 
-                if (cntFlag != itemPosition) {
-                    viewModel.daysUntilMatch(itemPosition, adapter.list.keys.toList()[itemPosition])
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                   val itemPosition =
+                        (matchesschedule_recyclerview_mainactivity.layoutManager as LinearLayoutManager)
+                            .findFirstVisibleItemPosition()
+
+                    if (cntFlag != itemPosition) {
+                        viewModel.daysUntilMatch(adapter.list.keys.toList()[itemPosition])
+                    }
+                    cntFlag = itemPosition
                 }
-                cntFlag = itemPosition
-            }
-        }
+
+
+            })
+
+        viewModel.daysNumberLiveData.observe(this, Observer {
+          days_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(it))
+            days_lottie_mainactivity.playAnimation()
+        })
+
 
 
     }

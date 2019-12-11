@@ -10,7 +10,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(matchesInteractor: MatchesInteractor) : ViewModel() {
     private val useCase = matchesInteractor
     val matchesScheduleLiveData = MutableLiveData<Map<String,List<MatchScheduleModel>>>()
-    fun testFun() {
+    val daysNumberLiveData = MutableLiveData<String>()
+    init {
       val d =   useCase.getMatches(10,0)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe { l , e ->
@@ -34,7 +35,7 @@ class MainViewModel @Inject constructor(matchesInteractor: MatchesInteractor) : 
         println("Testing appInjection !!")
     }
 
-    fun daysUntilMatch(itemPosition: Int, s: String) {
-        println(useCase.getDaysUntilDate(s))
+    fun daysUntilMatch(s: String) {
+        daysNumberLiveData.value = useCase.getDaysUntilDate(s)
     }
 }

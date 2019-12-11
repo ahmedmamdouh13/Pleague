@@ -21,7 +21,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
     var isMatchPlayed1 = false
 
-    var datetextMatch1= notAvailable
+    var matchTimeText= notAvailable
     var teamsgroup= notAvailable
     var matchResult1= notAvailable
 
@@ -65,7 +65,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
 
         canvas.save()
-        drawSchShape(canvas, team1Name,team2Name,datetextMatch1,matchResult1,isMatchPlayed1)
+        drawSchShape(canvas, team1Name,team2Name,matchTimeText,matchResult1,isMatchPlayed1)
         canvas.restore()
 
 
