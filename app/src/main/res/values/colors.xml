@@ -6,4 +6,7 @@
 
     <color name="colorPrimaryFade">#413A1BFF</color>
     <color name="colorPrimaryDarkFade">#311B92</color>
+
+    <color name="darkbackground">#B9252525</color>
+    <color name="darkerBackground">#B4585858</color>
 </resources>

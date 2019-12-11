@@ -3,6 +3,7 @@ package com.ahmedmamdouh13.theleague.ui.view
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
@@ -17,6 +18,8 @@ import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.date_in_lottie_layout.*
+import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -45,26 +48,104 @@ class MainActivity : AppCompatActivity() {
         matchesschedule_recyclerview_mainactivity.adapter = adapter
 
 
+
+
+
         matchesschedule_recyclerview_mainactivity.addOnScrollListener(object :
                 RecyclerView.OnScrollListener(){
 
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                   val itemPosition =
-                        (matchesschedule_recyclerview_mainactivity.layoutManager as LinearLayoutManager)
-                            .findFirstVisibleItemPosition()
 
-                    if (cntFlag != itemPosition) {
-                        viewModel.daysUntilMatch(adapter.list.keys.toList()[itemPosition])
-                    }
-                    cntFlag = itemPosition
                 }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val itemPosition =
+                    (matchesschedule_recyclerview_mainactivity.layoutManager as LinearLayoutManager)
+                        .findFirstVisibleItemPosition()
+
+                if (cntFlag != itemPosition) {
+
+
+                    val date1 = adapter.list.keys.toList()[itemPosition]
+                    viewModel.daysUntilMatch(date1)
+
+                    val arr =  date1.split("-")
+                    val date = arr[0]+arr[1]+arr[2]
+                    for (c in date.indices){
+                        when(c) {
+                            0 -> {
+                             lottie_linearlayout_container.number_1_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_1_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            1 -> {
+                                lottie_linearlayout_container.   number_2_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_2_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            2 -> {
+                                lottie_linearlayout_container.number_3_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_3_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            3 -> {
+                                lottie_linearlayout_container.number_4_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_4_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            4 -> {
+                                lottie_linearlayout_container.number_5_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_5_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            5 -> {
+                                lottie_linearlayout_container.number_6_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_6_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            6 -> {
+                                lottie_linearlayout_container.number_7_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_7_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                            7 -> {
+                                lottie_linearlayout_container.number_8_lottieview_itemmatchschedule
+                                .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+                                lottie_linearlayout_container.number_8_lottieview_itemmatchschedule.playAnimation()
+
+                            }
+                        }
+                    }
+                }
+                cntFlag = itemPosition
+
+            }
 
 
             })
 
+
         viewModel.daysNumberLiveData.observe(this, Observer {
-          days_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(it))
-            days_lottie_mainactivity.playAnimation()
+
+            if (it.length > 1) {
+                daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(it[0].toString()))
+                daysleft_lottie_mainactivity.playAnimation()
+                daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(it[1].toString()))
+                daysright_lottie_mainactivity.playAnimation()
+            }
+            else {
+                daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile("0"))
+                daysleft_lottie_mainactivity.playAnimation()
+                daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(it))
+                daysright_lottie_mainactivity.playAnimation()
+            }
         })
 
 

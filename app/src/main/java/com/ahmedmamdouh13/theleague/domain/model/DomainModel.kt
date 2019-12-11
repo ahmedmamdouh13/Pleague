@@ -7,7 +7,8 @@ data class DomainModel(
     var date: String,
     var time: String,
     var homeScore: Int,
-    var awayScore: Int
+    var awayScore: Int,
+    var group: String
 )
 
 

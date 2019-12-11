@@ -30,6 +30,7 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
                             date = match.utcDate
                             homeScore = match.score.fullTime.homeTeam
                             awayScore = match.score.fullTime.awayTeam
+                            group = match.status
                         }
                     }
                     dao.insertMatchesList(matchesList)
@@ -47,7 +48,8 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
                     list.date,
                     "",
                     list.homeScore,
-                    list.awayScore
+                    list.awayScore,
+                    list.group
                 )
 
         }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
+import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import kotlinx.android.synthetic.main.item_matchschedule.view.*
 
 
@@ -40,52 +41,53 @@ class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyc
             matchScheduleModel: List<MatchScheduleModel>?,
             date1: String
         ) {
-            val arr =  date1.split("-")
-           val date = arr[0]+arr[1]+arr[2]
-            for (c in date.indices){
-                when(c) {
-                   0 -> {itemView.number_1_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_1_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   1 -> {itemView.number_2_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_2_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   2 -> {itemView.number_3_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_3_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   3 -> {itemView.number_4_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_4_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   4 -> {itemView.number_5_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_5_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   5 -> {itemView.number_6_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_6_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   6 -> {itemView.number_7_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_7_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                   7 -> {itemView.number_8_lottieview_itemmatchschedule
-                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-                       itemView.number_8_lottieview_itemmatchschedule.playAnimation()
-
-                   }
-                }
-            }
+            itemView.date_textview_item_matchschedule.text = date1
+//            val arr =  date1.split("-")
+//           val date = arr[0]+arr[1]+arr[2]
+//            for (c in date.indices){
+//                when(c) {
+//                   0 -> {itemView.number_1_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_1_lottieview_itemmatchschedule
+//
+//                   }
+//                   1 -> {itemView.number_2_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_2_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   2 -> {itemView.number_3_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_3_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   3 -> {itemView.number_4_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_4_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   4 -> {itemView.number_5_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_5_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   5 -> {itemView.number_6_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_6_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   6 -> {itemView.number_7_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_7_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                   7 -> {itemView.number_8_lottieview_itemmatchschedule
+//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
+//                       itemView.number_8_lottieview_itemmatchschedule.playAnimation()
+//
+//                   }
+//                }
+//            }
             itemView.matches_recyclerview_item_matchschedule.layoutManager = LinearLayoutManager(itemView.context,LinearLayoutManager.VERTICAL,false)
             itemView.matches_recyclerview_item_matchschedule.itemAnimator = DefaultItemAnimator()
             itemView.matches_recyclerview_item_matchschedule.adapter = MatchesRecyclerAdapter().apply {

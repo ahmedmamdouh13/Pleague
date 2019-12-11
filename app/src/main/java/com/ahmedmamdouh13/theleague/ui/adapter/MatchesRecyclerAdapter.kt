@@ -41,16 +41,19 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
 
             itemView.match_scheduleview_itemmatch.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch.team2Name = matchScheduleModel.awayTeam
+            itemView.match_scheduleview_itemmatch.teamsgroup = matchScheduleModel.group
 
             when(matchScheduleModel.homeScore){
                -1 -> {
-
+                   itemView.match_scheduleview_itemmatch.isMatchPlayed1 = false
                    itemView.match_scheduleview_itemmatch.matchTimeText = matchScheduleModel.time
                }
 
-                else -> itemView.match_scheduleview_itemmatch.matchResult1 =
-                    "${matchScheduleModel.homeScore} - ${matchScheduleModel.awayScore}"
-
+                else -> {
+                    itemView.match_scheduleview_itemmatch.matchResult1 =
+                        "${matchScheduleModel.homeScore} - ${matchScheduleModel.awayScore}"
+                    itemView.match_scheduleview_itemmatch.isMatchPlayed1 = true
+                }
             }
             itemView.match_scheduleview_itemmatch.invalidate()
 

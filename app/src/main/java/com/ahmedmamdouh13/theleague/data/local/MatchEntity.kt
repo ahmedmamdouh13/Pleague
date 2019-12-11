@@ -19,4 +19,6 @@ class MatchEntity {
     var homeTeam = ""
 
     var awayTeam = ""
+
+    var group = ""
 }

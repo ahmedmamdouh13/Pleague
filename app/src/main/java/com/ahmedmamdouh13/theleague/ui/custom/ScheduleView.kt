@@ -60,7 +60,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
         my=(height/4).toFloat()
 
         canvas.translate(0f,-10f)
-        canvas.drawText(teamsgroup,0f,0f,paint)
+        canvas.drawText(teamsgroup,0f,0f,textPaint)
         canvas.translate(0f,10f)
 
 

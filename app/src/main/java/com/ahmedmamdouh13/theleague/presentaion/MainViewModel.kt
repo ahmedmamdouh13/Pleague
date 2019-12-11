@@ -12,7 +12,7 @@ class MainViewModel @Inject constructor(matchesInteractor: MatchesInteractor) : 
     val matchesScheduleLiveData = MutableLiveData<Map<String,List<MatchScheduleModel>>>()
     val daysNumberLiveData = MutableLiveData<String>()
     init {
-      val d =   useCase.getMatches(10,0)
+      val d =   useCase.getMatches(30,0)
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe { l , e ->
           matchesScheduleLiveData.value = l.mapValues { list ->
@@ -25,7 +25,8 @@ class MainViewModel @Inject constructor(matchesInteractor: MatchesInteractor) : 
                       it.awayScore,
                       it.awayTeam,
                       it.homeScore,
-                      it.homeTeam
+                      it.homeTeam,
+                      it.group
                   )
               }
           }
