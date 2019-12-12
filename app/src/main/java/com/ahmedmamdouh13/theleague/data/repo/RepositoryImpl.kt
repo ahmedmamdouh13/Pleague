@@ -20,9 +20,10 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
         val disposable = service.getMatches()
             .subscribeOn(Schedulers.io())
             .subscribe { list, e ->
-//            println("here2 ${list.matches[0].utcDate}")
                 if (list != null) {
                     val matchesList = list.matches.map { match ->
+//                        println("this is what it is actually ${match.utcDate}")
+
                         MatchEntity().apply {
                             id = match.id
                             awayTeam = match.awayTeam.name
@@ -36,9 +37,10 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
                     dao.insertMatchesList(matchesList)
                 }
         }
-        return dao.getMatches(offset, index, todayInUtc)
+        return dao.getMatches(100, 0, todayInUtc)
             .map {
             it.map { list ->
+                println("this is what it is actually ${list.date}")
 
                 DomainModel(
                     list.id,

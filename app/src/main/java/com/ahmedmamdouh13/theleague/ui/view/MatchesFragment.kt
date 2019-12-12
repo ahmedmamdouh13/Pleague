@@ -18,6 +18,8 @@ import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
+import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
+import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -31,8 +33,7 @@ class MatchesFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: MainViewModel
 
-    private val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
-    private val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,6 +44,7 @@ class MatchesFragment : Fragment() {
 
 
         view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
+
         viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
 
@@ -51,7 +53,7 @@ class MatchesFragment : Fragment() {
             viewModel.matchesScheduleLiveData.observe(viewLifecycleOwner, Observer {
                 list = it
                 notifyDataSetChanged()
-                viewModel.daysUntilMatch(it.keys.toList()[0])
+                viewModel.daysUntilMatch(it.keys.toList().first())
 
             })
         }
@@ -77,66 +79,12 @@ class MatchesFragment : Fragment() {
                     (view.matchesschedule_recyclerview_mainactivity.layoutManager as LinearLayoutManager)
                         .findFirstVisibleItemPosition()
 
-                if (cntFlag != itemPosition && itemPosition > 0) {
+                if (cntFlag != itemPosition && itemPosition >= 0) {
 
 
                     val date1 = adapter.list.keys.toList()[itemPosition]
                     viewModel.daysUntilMatch(date1)
 
-//                    val arr =  date1.split("-")
-//                    val date = arr[0]+arr[1]+arr[2]
-//                    for (c in date.indices){
-//                        when(c) {
-//                            0 -> {
-//                               view.lottie_linearlayout_container.number_1_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_1_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            1 -> {
-//                                view. lottie_linearlayout_container.number_2_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view. lottie_linearlayout_container.number_2_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            2 -> {
-//                                view.lottie_linearlayout_container.number_3_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_3_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            3 -> {
-//                                view.lottie_linearlayout_container.number_4_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_4_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            4 -> {
-//                                view.lottie_linearlayout_container.number_5_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_5_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            5 -> {
-//                                view.lottie_linearlayout_container.number_6_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_6_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            6 -> {
-//                                view.lottie_linearlayout_container.number_7_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_7_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                            7 -> {
-//                                view.lottie_linearlayout_container.number_8_lottieview_itemmatchschedule
-//                                    .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                                view.lottie_linearlayout_container.number_8_lottieview_itemmatchschedule.playAnimation()
-//
-//                            }
-//                        }
-//                    }
                 }
                 cntFlag = itemPosition
 

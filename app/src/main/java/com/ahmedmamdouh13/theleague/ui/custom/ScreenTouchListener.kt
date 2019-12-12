@@ -13,8 +13,6 @@ class ScreenTouchListener @Inject constructor() : View.OnTouchListener {
     private var percentLeft: Float = 0.0f
     private var percentRight: Float = 0.0f
     private lateinit var gestures: TouchGestures
-    private val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
-    private val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
     var xPerPixel = 0f
     var yPerPixel = 0f
     var  xDifference = 0f
@@ -27,7 +25,10 @@ class ScreenTouchListener @Inject constructor() : View.OnTouchListener {
        const val BOTTM_LIMIT = 0.9F
        const val LEFT_LIMIT = 0.5F
        const val RIGHT_LIMIT = 0.8F
-    }
+       val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
+       val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
+
+   }
     override fun onTouch(v: View, event: MotionEvent): Boolean {
 
 

@@ -4,4 +4,5 @@
     android:endColor="@color/colorPrimaryDarkFade"
     android:angle="90"
     />
+    <corners android:topLeftRadius="32dp"/>
 </shape>

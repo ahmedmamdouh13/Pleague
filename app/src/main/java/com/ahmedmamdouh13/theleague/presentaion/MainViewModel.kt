@@ -27,7 +27,7 @@ class MainViewModel @Inject constructor(
           .subscribe { l , e ->
           matchesScheduleLiveData.value = l.mapValues { list ->
               list.value.map {
-                  println(it.date + " da b3d b2a ")
+                  println(it.date + " da b3d b2a " + list.key)
                   MatchScheduleModel(
                       it.id,
                       it.date,
@@ -43,20 +43,20 @@ class MainViewModel @Inject constructor(
 
         }
 //        useCase.getMatches(10,10)
-        useCase.getFavoriteMatches()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                it.map {
-                    println("${it.favorite} ${it.id}")
-                }
-            }
+//     val disposable =   useCase.getFavoriteMatches()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                it.map {
+//                    println("${it.favorite} ${it.id}")
+//                }
+//            }
         println("Testing appInjection !!")
     }
 
-    fun daysUntilMatch(s: String) {
-        daysNumberLiveData.value = useCase.getDaysUntilDate(s)
-        dateChangedLiveData.value = s
+    fun daysUntilMatch(date: String) {
+        daysNumberLiveData.value = useCase.getDaysUntilDate(date)
+        dateChangedLiveData.value = date
     }
 
 

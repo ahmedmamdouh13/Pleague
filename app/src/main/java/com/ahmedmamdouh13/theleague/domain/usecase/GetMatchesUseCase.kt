@@ -20,8 +20,10 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
        return repository.getMatches(size, index, util.getTodayInUtc())
           .map  { domainList ->
               mapper.getMatchesInScheduleForm( domainList.map {d ->
+                  println("so curious ${d.date}")
                   d.time = util.getTimeFromUtcDate(d.date)
                   d.date = util.getDateFromUtcDate(d.date)
+
                   d
               }
 

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:drawable="@drawable/abstraction_blue"/>
-    <item android:drawable="@drawable/primary_color_fade_dark"/>
+
+    <item android:drawable="@drawable/abstraction_blue"
+
+    />
+
+    <item android:drawable="@drawable/primary_color_fade_dark"
+
+
+        />
 </layer-list>

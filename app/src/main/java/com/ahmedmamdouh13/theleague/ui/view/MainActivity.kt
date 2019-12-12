@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
 //            bottom_guideline.setGuidelinePercent(1f)
 //        }
         touchListener.setTouchGestures(this)
-        favorite_screen_activitymain.setOnTouchListener(touchListener)
+        favorite_imageview_mainactivity.setOnTouchListener(touchListener)
 
     }
 
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
         id: Int
     ) {
 when(id){
-    favorite_screen_activitymain.id ->{
+    favorite_imageview_mainactivity.id ->{
         left_guideline.setGuidelinePercent(percentLeft)
         top_guideline.setGuidelinePercent(percentTop)
         favorite_imageview_mainactivity.visibility = View.VISIBLE
@@ -99,33 +99,37 @@ when(id){
         duration = 250
     }
 
-   val  transitionSet =  autoTransition.addListener(object : Transition.TransitionListener {
-       override fun onTransitionEnd(transition: Transition) {
+    val transitionSet = autoTransition.addListener(object : Transition.TransitionListener {
+        override fun onTransitionEnd(transition: Transition) {
+            favorite_imageview_mainactivity.isEnabled = true
+            matches_imageview_mainactivity.isEnabled = true
+        }
 
-       }
+        override fun onTransitionResume(transition: Transition) {
 
-       override fun onTransitionResume(transition: Transition) {
-       }
+        }
 
-       override fun onTransitionPause(transition: Transition) {
-       }
+        override fun onTransitionPause(transition: Transition) {
+        }
 
-       override fun onTransitionCancel(transition: Transition) {
-       }
+        override fun onTransitionCancel(transition: Transition) {
+        }
 
-       override fun onTransitionStart(transition: Transition) {
-       }
+        override fun onTransitionStart(transition: Transition) {
+            favorite_imageview_mainactivity.isEnabled = false
+            matches_imageview_mainactivity.isEnabled = false
+        }
 
+    })
 
-   })
     override fun expand(id: Int) {
 
 
         when(id){
-            favorite_screen_activitymain.id ->{
+            favorite_imageview_mainactivity.id ->{
 
+                matches_imageview_mainactivity.bringToFront()
                 matches_screen_activitymain.visibility = View.INVISIBLE
-                matches_imageview_mainactivity.visibility = View.VISIBLE
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
 
@@ -133,19 +137,21 @@ when(id){
                 top_guideline.setGuidelinePercent(0f)
                 left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
-                favorite_imageview_mainactivity.alpha = 0f
-                matches_screen_activitymain.setOnTouchListener(touchListener)
-                favorite_screen_activitymain.setOnTouchListener(null)
+//                favorite_imageview_mainactivity.alpha = 0f
+                matches_imageview_mainactivity.setOnTouchListener(touchListener)
+                favorite_imageview_mainactivity.setOnTouchListener(null)
                 matches_screen_activitymain.bringToFront()
                 matches_screen_activitymain.alpha = 1f
                 matches_screen_activitymain.visibility = View.VISIBLE
+                matches_imageview_mainactivity.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.GONE
                 matches_imageview_mainactivity.alpha = 1f
-                matches_imageview_mainactivity.bringToFront()
 
             }
             else ->{
                 favorite_screen_activitymain.visibility = View.INVISIBLE
+                favorite_imageview_mainactivity.bringToFront()
+
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
                 left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
@@ -153,14 +159,13 @@ when(id){
                 left_guideline_matches.setGuidelinePercent(0f)
                 top_guideline_matches.setGuidelinePercent(0f)
                 favorite_imageview_mainactivity.alpha = 1f
-                matches_screen_activitymain.setOnTouchListener(null)
-                favorite_screen_activitymain.setOnTouchListener(touchListener)
+                matches_imageview_mainactivity.setOnTouchListener(null)
+                favorite_imageview_mainactivity.setOnTouchListener(touchListener)
                 favorite_screen_activitymain.bringToFront()
                 favorite_screen_activitymain.alpha = 1f
                 favorite_screen_activitymain.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.VISIBLE
                 matches_imageview_mainactivity.visibility = View.GONE
-                favorite_imageview_mainactivity.bringToFront()
 
 
             }
@@ -172,14 +177,14 @@ when(id){
         TransitionManager
             .beginDelayedTransition(favorite_screen_container_activitymain)
         when(id){
-            matches_screen_activitymain.id ->{
+            matches_imageview_mainactivity.id ->{
                 left_guideline.setGuidelinePercent(0f)
                 top_guideline.setGuidelinePercent(0f)
                 left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
                 favorite_imageview_mainactivity.alpha = 0f
-                matches_screen_activitymain.setOnTouchListener(touchListener)
-                favorite_screen_activitymain.setOnTouchListener(null)
+                matches_imageview_mainactivity.setOnTouchListener(touchListener)
+                favorite_imageview_mainactivity.setOnTouchListener(null)
                 matches_screen_activitymain.bringToFront()
                 matches_screen_activitymain.alpha = 1f
                 matches_imageview_mainactivity.alpha = 1f
@@ -191,8 +196,8 @@ when(id){
                 left_guideline_matches.setGuidelinePercent(0f)
                 top_guideline_matches.setGuidelinePercent(0f)
                 favorite_imageview_mainactivity.alpha = 1f
-                matches_screen_activitymain.setOnTouchListener(null)
-                favorite_screen_activitymain.setOnTouchListener(touchListener)
+                matches_imageview_mainactivity.setOnTouchListener(null)
+                favorite_imageview_mainactivity.setOnTouchListener(touchListener)
                 favorite_screen_activitymain.bringToFront()
                 favorite_screen_activitymain.alpha = 1f
                 matches_imageview_mainactivity.alpha = 0f
