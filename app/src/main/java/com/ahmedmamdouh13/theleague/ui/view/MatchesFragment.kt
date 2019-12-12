@@ -1,5 +1,6 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
+import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
@@ -29,7 +31,8 @@ class MatchesFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: MainViewModel
 
-
+    private val deviceHeight = Resources.getSystem().displayMetrics.heightPixels
+    private val deviceWidth = Resources.getSystem().displayMetrics.widthPixels
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,6 +42,7 @@ class MatchesFragment : Fragment() {
         val view = inflater.inflate(R.layout.matches_screen, null, false)
 
 
+        view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
         viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
 

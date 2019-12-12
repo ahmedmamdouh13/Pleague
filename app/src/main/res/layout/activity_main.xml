@@ -6,8 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/favorite_screen_container_activitymain"
-    android:animateLayoutChanges="true"
-        >
+    android:background="@drawable/shape_appbar"
+
+    >
 
     <FrameLayout
         android:layout_width="0dp"
@@ -18,7 +19,6 @@
         app:layout_constraintLeft_toRightOf="@id/left_guideline_matches"
         app:layout_constraintRight_toLeftOf="@id/right_guideline_matches"
         android:background="@drawable/shape_appbar"
-        android:focusable="false"
         >
         <ImageView
             android:layout_width="match_parent"

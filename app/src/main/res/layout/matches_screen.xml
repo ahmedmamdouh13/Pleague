@@ -8,6 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_favorite_screen"
+    android:focusable="false"
+
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -17,7 +19,6 @@
         android:layout_width="match_parent"
         android:theme="@style/Theme.AppCompat"
         android:background="@drawable/shape_appbar"
-        android:nestedScrollingEnabled="false"
         app:elevation="0dp"
         >
 
@@ -84,7 +85,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:layout_marginTop="17dp"
         android:id="@+id/matchesschedule_recyclerview_mainactivity"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

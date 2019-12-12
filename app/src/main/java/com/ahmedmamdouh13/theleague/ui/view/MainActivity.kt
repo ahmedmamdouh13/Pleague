@@ -7,15 +7,18 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.transition.Slide
-import androidx.transition.TransitionManager
-import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
 import com.ahmedmamdouh13.theleague.ui.custom.TouchGestures
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.transition.ChangeBounds
+import androidx.transition.*
+import com.ahmedmamdouh13.theleague.R
 
 class MainActivity : AppCompatActivity() , TouchGestures {
     @Inject
@@ -92,6 +95,29 @@ when(id){
 //        right_guideline_matches.setGuidelinePercent(1 - (percentRight / 2))
     }
 
+    val autoTransition = AutoTransition().apply {
+        duration = 250
+    }
+
+   val  transitionSet =  autoTransition.addListener(object : Transition.TransitionListener {
+       override fun onTransitionEnd(transition: Transition) {
+
+       }
+
+       override fun onTransitionResume(transition: Transition) {
+       }
+
+       override fun onTransitionPause(transition: Transition) {
+       }
+
+       override fun onTransitionCancel(transition: Transition) {
+       }
+
+       override fun onTransitionStart(transition: Transition) {
+       }
+
+
+   })
     override fun expand(id: Int) {
 
 
@@ -100,9 +126,9 @@ when(id){
 
                 matches_screen_activitymain.visibility = View.INVISIBLE
                 matches_imageview_mainactivity.visibility = View.VISIBLE
-                matches_imageview_mainactivity.bringToFront()
                 TransitionManager
-                    .beginDelayedTransition(favorite_screen_container_activitymain)
+                    .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
+
                 left_guideline.setGuidelinePercent(0f)
                 top_guideline.setGuidelinePercent(0f)
                 left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
@@ -115,12 +141,13 @@ when(id){
                 matches_screen_activitymain.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.GONE
                 matches_imageview_mainactivity.alpha = 1f
+                matches_imageview_mainactivity.bringToFront()
+
             }
             else ->{
                 favorite_screen_activitymain.visibility = View.INVISIBLE
-                favorite_imageview_mainactivity.bringToFront()
                 TransitionManager
-                    .beginDelayedTransition(favorite_screen_container_activitymain)
+                    .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
                 left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
                 left_guideline_matches.setGuidelinePercent(0f)
@@ -133,6 +160,8 @@ when(id){
                 favorite_screen_activitymain.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.VISIBLE
                 matches_imageview_mainactivity.visibility = View.GONE
+                favorite_imageview_mainactivity.bringToFront()
+
 
             }
         }
@@ -171,3 +200,4 @@ when(id){
         }
     }
 }
+
