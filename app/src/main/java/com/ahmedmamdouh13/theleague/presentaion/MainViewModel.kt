@@ -16,6 +16,7 @@ class MainViewModel @Inject constructor(
     private val useCase = matchesInteractor
     val matchesScheduleLiveData = MutableLiveData<Map<String,List<MatchScheduleModel>>>()
     val daysNumberLiveData = MutableLiveData<String>()
+    val dateChangedLiveData = MutableLiveData<String>()
     val checkToggleListener: MutableLiveData<Int> = MutableLiveData()
     val unCheckToggleListener: MutableLiveData<Int> = MutableLiveData()
 
@@ -55,6 +56,7 @@ class MainViewModel @Inject constructor(
 
     fun daysUntilMatch(s: String) {
         daysNumberLiveData.value = useCase.getDaysUntilDate(s)
+        dateChangedLiveData.value = s
     }
 
 

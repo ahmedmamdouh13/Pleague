@@ -6,7 +6,9 @@
 
     android:id="@+id/root_container_activitymain"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_favorite_screen"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -14,7 +16,9 @@
         android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:theme="@style/Theme.AppCompat"
-        android:background="@drawable/fade_blue_photo"
+        android:background="@drawable/shape_appbar"
+        android:nestedScrollingEnabled="false"
+        app:elevation="0dp"
         >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -28,12 +32,6 @@
             >
 
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent"
-                app:layout_collapseMode="parallax"
-                />
 
 
             <RelativeLayout
@@ -41,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax"
+                android:background="@drawable/shape_appbar"
 
                 android:layout_gravity="center"
                 >
@@ -73,6 +72,14 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    android:layout_margin="16dp"
+    android:background="@drawable/shape_appbar"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -86,8 +93,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="8dp"
+        app:cardCornerRadius="32dp"
+
         app:cardBackgroundColor="@color/darkbackground"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         >
@@ -142,5 +149,5 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
-
+</FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

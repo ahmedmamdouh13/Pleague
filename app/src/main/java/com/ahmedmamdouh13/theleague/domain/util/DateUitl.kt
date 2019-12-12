@@ -1,5 +1,7 @@
 package com.ahmedmamdouh13.theleague.domain.util
 
+import com.ahmedmamdouh13.theleague.ui.Constants
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -13,11 +15,18 @@ class DateUitl @Inject constructor() {
 
 
     fun getTimeFromUtcDate(date: String): String{
-        val timeFormat = SimpleDateFormat("hh:mm a")
-        val utcDate = utcDateFormat.parse(date)
-        println(date)
-        println("dateutil")
-        return timeFormat.format(utcDate).toString()
+      return  try {
+
+            val timeFormat = SimpleDateFormat("hh:mm a")
+            val utcDate = utcDateFormat.parse(date)
+            println(date)
+            println("dateutil")
+          timeFormat.format(utcDate).toString()
+        }
+        catch (e: Exception){
+            e.printStackTrace()
+           Constants.notAvailable
+        }
     }
 
     fun isThisDayToday(date: String): Boolean{
