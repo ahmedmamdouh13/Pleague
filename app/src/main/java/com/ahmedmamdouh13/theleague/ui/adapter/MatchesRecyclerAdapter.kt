@@ -45,15 +45,18 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
         var isChecked = false
 
         init {
+            itemView.favorite_lottieview_itemmatch.setMaxProgress(0.5f)
             itemView.favorite_container_itemmatch.setOnClickListener {
                 if (!isChecked) {
-                    itemView.favorite_lottieview_itemmatch.visibility = View.VISIBLE
+                    itemView.favorite_lottieview_itemmatch.speed = 1f
                     itemView.favorite_lottieview_itemmatch.playAnimation()
                     checkToggleListener.value = list[adapterPosition].id
                     isChecked = true
                 }
                 else {
-                    itemView.favorite_lottieview_itemmatch.visibility = View.INVISIBLE
+                    itemView.favorite_lottieview_itemmatch.speed = -2f
+                    itemView.favorite_lottieview_itemmatch.playAnimation()
+
                     unCheckToggleListener.value = list[adapterPosition].id
                     isChecked = false
                 }
@@ -67,6 +70,7 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
             itemView.match_scheduleview_itemmatch.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch.team2Name = matchScheduleModel.awayTeam
             itemView.match_scheduleview_itemmatch.teamsgroup = matchScheduleModel.group
+
 
             when(matchScheduleModel.homeScore){
                -1 -> {

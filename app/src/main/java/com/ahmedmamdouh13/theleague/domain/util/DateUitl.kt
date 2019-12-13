@@ -81,7 +81,11 @@ class DateUitl @Inject constructor() {
         val hourMilli = minMilli * 60
         val daysMilli =  hourMilli * 24
 
-        return "${(daysMillis / daysMilli) + 1}"
+        val s1 = (daysMillis / daysMilli) + 1
+        return when {
+            s1  < 10 -> "0$s1"
+            else -> "$s1"
+        }
     }
 
 

@@ -11,13 +11,13 @@ import com.ahmedmamdouh13.theleague.ui.Constants.notAvailable
 class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context,attrs) {
     constructor(context: Context) : this(context,null)
 
-    var paint=Paint()
-    var textPaint=Paint()
-    var mx=0f
-    var my=0f
-    var team1Name="team1"
-    var team2Name="team2"
-    var textSize=30f
+    var paint = Paint()
+    var textPaint = Paint()
+    private var mx = 0f
+    var my = 0f
+    var team1Name = "team1"
+    var team2Name = "team2"
+    var textSize = 30f
 
     var isMatchPlayed1 = false
 
@@ -34,13 +34,14 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
         paint.textAlign=Paint.Align.CENTER
         paint.textSize=textSize
         paint.isFakeBoldText=true
-        paint.strokeWidth=5f
+        paint.strokeWidth=10f
         paint.isAntiAlias=true
 
-        textPaint.color = ContextCompat.getColor(context,android.R.color.white)
+        textPaint.color = ContextCompat.getColor(context, android.R.color.white)
         textPaint.textAlign=Paint.Align.CENTER
         textPaint.strokeWidth=10f
         textPaint.textSize=textSize
+        textPaint.isFakeBoldText=true
         textPaint.isAntiAlias=true
     }
 
@@ -85,7 +86,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
         canvas.translate(0f,my)
 
-        canvas.drawLine(-mx-2.8f,0f,mx+2.8f,0f,paint)   //horizontal line
+        canvas.drawLine(-mx-4f,0f,mx+4f,0f,paint)   //horizontal line
 
         canvas.translate(0f,-my)
 

@@ -34,7 +34,12 @@ class FavoriteFragment : Fragment() {
         init()
         val view = inflater.inflate(R.layout.favorite_screen, null, false)
 
+        if (resources.getBoolean(R.bool.isPortrait))
         view.favorite_screen_container_favoritefragment.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
+        else
+        view.favorite_screen_container_favoritefragment.layoutParams = ViewGroup.LayoutParams(
+            deviceHeight, deviceWidth)
+
 
         viewModel.checkToggleListener.observe(viewLifecycleOwner,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(viewLifecycleOwner,viewModel.unCheckObserver)
@@ -44,7 +49,6 @@ class FavoriteFragment : Fragment() {
             setFavoriteListeners(viewModel.checkToggleListener, viewModel.unCheckToggleListener)
             viewModel.matchesFavoriteLiveData.observe(viewLifecycleOwner, Observer {
                 list = it
-                notifyDataSetChanged()
             })
         }
         view.matches_recyclerview_favoritescreen.itemAnimator = DefaultItemAnimator()

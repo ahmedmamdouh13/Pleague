@@ -47,6 +47,15 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
         repository.unFavoriteFixture(id)
     }
 
-    override fun getFavoriteMatches(): Flowable<List<DomainModel>> = repository.getFavoriteMatches()
-
+    override fun getFavoriteMatches(): Flowable<List<DomainModel>> {
+       return repository.getFavoriteMatches()
+           .map {
+               it.map {d ->
+                   println("so curious ${d.date}")
+                   d.time = util.getTimeFromUtcDate(d.date)
+                   d.date = util.getDateFromUtcDate(d.date)
+                   d
+               }
+           }
+    }
 }

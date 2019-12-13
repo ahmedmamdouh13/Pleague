@@ -7,7 +7,7 @@
     <color name="colorPrimaryFade">#413A1BFF</color>
     <color name="colorPrimaryDarkFade">#311B92</color>
 
-    <color name="darkbackground">#B9252525</color>
+    <color name="darkbackground">#252525</color>
     <color name="darkerbackground">#F7181818</color>
     <color name="darkerbackground2">#0A0A0A</color>
     <color name="lighterdarkBackground">#B4585858</color>

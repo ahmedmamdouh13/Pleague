@@ -20,10 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="2019 - 12 - 15"
-        android:textSize="30sp"
+        android:textSize="24sp"
         android:layout_gravity="center"
         android:gravity="center"
         android:id="@+id/date_textview_item_matchschedule"
+        android:textStyle="italic"
         android:textColor="@color/lighterdarkBackground"
         />
 <!--   <include layout="@layout/date_in_lottie_layout"-->
@@ -34,8 +35,9 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/matches_recyclerview_item_matchschedule"
+
+
         />
 </LinearLayout>
 

@@ -17,6 +17,7 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.transition.ChangeBounds
+import android.view.WindowManager
 import androidx.transition.*
 import com.ahmedmamdouh13.theleague.R
 
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
      init()
 
         supportFragmentManager.beginTransaction()
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
     override fun swipe(percent: Float) {
     }
 
+    var isScrolled = false
     override fun scroll(
         percentTop: Float,
         percentBottom: Float,
@@ -87,6 +90,7 @@ when(id){
     }
 }
 
+        isScrolled = true
 
 //        matches_screen_activitymain.translationZ = percentTop
 //        left_guideline_matches.setGuidelinePercent(1 - (percentLeft / 2))
@@ -95,7 +99,7 @@ when(id){
 //        right_guideline_matches.setGuidelinePercent(1 - (percentRight / 2))
     }
 
-    val autoTransition = AutoTransition().apply {
+    private val autoTransition = AutoTransition().apply {
         duration = 250
     }
 
@@ -129,6 +133,7 @@ when(id){
             favorite_imageview_mainactivity.id ->{
 
                 matches_imageview_mainactivity.bringToFront()
+                if (isScrolled)
                 matches_screen_activitymain.visibility = View.INVISIBLE
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
@@ -149,6 +154,7 @@ when(id){
 
             }
             else ->{
+                if (isScrolled)
                 favorite_screen_activitymain.visibility = View.INVISIBLE
                 favorite_imageview_mainactivity.bringToFront()
 
@@ -170,6 +176,7 @@ when(id){
 
             }
         }
+        isScrolled = false
 
     }
 
@@ -203,6 +210,7 @@ when(id){
                 matches_imageview_mainactivity.alpha = 0f
             }
         }
+        isScrolled = false
     }
 }
 

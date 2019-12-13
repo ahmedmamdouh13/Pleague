@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/container_scheduleview_itemmatch"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/item_shape_border"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_appbar2"
 
         >
 

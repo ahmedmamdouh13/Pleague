@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
@@ -37,8 +38,12 @@ class MatchesFragment : Fragment() {
         init()
         val view = inflater.inflate(R.layout.matches_screen, null, false)
 
+        if (resources.getBoolean(R.bool.isPortrait))
+            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
+        else
+            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(
+                deviceHeight, deviceWidth)
 
-        view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
 
         viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
@@ -159,7 +164,6 @@ class MatchesFragment : Fragment() {
         viewModel.daysNumberLiveData.observe(this, Observer {days ->
 
 
-            if (days.length > 1) {
                 if (currentDays[0] != days[0]) {
                     view.daysleft_lottie_mainactivity.setAnimation(
                         LottieAnimationsRaw.getRawFile(
@@ -170,15 +174,7 @@ class MatchesFragment : Fragment() {
                 }
                 view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(days[1].toString()))
                 view.daysright_lottie_mainactivity.playAnimation()
-            }
-            else {
-                if (currentDays[0] != '0') {
-                    view.daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile("0"))
-                    view.daysleft_lottie_mainactivity.playAnimation()
-                }
-                view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(days))
-                view.daysright_lottie_mainactivity.playAnimation()
-            }
+
             currentDays = days
         })
 
