@@ -45,60 +45,17 @@ class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyc
         unCheckListener = unCheckToggleListener
     }
    inner class MatchesScheduleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bind(
+       val matchesItemDecorator = MatchesItemDecorator(15)
+       fun bind(
             matchScheduleModel: List<MatchScheduleModel>?,
             date1: String
         ) {
             itemView.date_textview_item_matchschedule.text = date1
-//            val arr =  date1.split("-")
-//           val date = arr[0]+arr[1]+arr[2]
-//            for (c in date.indices){
-//                when(c) {
-//                   0 -> {itemView.number_1_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_1_lottieview_itemmatchschedule
-//
-//                   }
-//                   1 -> {itemView.number_2_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_2_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   2 -> {itemView.number_3_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_3_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   3 -> {itemView.number_4_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_4_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   4 -> {itemView.number_5_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_5_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   5 -> {itemView.number_6_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_6_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   6 -> {itemView.number_7_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_7_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                   7 -> {itemView.number_8_lottieview_itemmatchschedule
-//                        .setAnimation(LottieAnimationsRaw.getRawFile(date[c].toString()))
-//                       itemView.number_8_lottieview_itemmatchschedule.playAnimation()
-//
-//                   }
-//                }
-//            }
+
             itemView.matches_recyclerview_item_matchschedule.layoutManager = LinearLayoutManager(itemView.context,LinearLayoutManager.VERTICAL,false)
             itemView.matches_recyclerview_item_matchschedule.itemAnimator = DefaultItemAnimator()
             itemView.matches_recyclerview_item_matchschedule.adapter = MatchesRecyclerAdapter().apply {
+
                 setFavoriteListeners(checkListener,unCheckListener)
 
                 if (matchScheduleModel != null) {

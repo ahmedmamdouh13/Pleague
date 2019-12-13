@@ -10,9 +10,9 @@ import io.reactivex.Single
 @Dao
 interface MatchesDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMatchesList(matchEntity: List<MatchEntity>): List<Long>
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMatch(matchEntity: MatchEntity): Long
 
     @Query("SELECT * FROM `match` WHERE date >= :date ORDER By date LIMIT :pageSize OFFSET :pageIndex ")

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/shape_appbar"
+    android:background="@drawable/shape_appbar2"
     android:id="@+id/favorite_screen_container_favoritefragment"
     >
 
@@ -39,14 +39,13 @@
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-    <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/matches_recyclerview_favoritescreen"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
-    />
-
-
-
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

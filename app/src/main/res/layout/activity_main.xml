@@ -28,7 +28,7 @@
             android:layout_gravity="center"
             android:scaleType="centerInside"
             android:id="@+id/matches_imageview_mainactivity"
-            android:background="@drawable/ripple_corner_shape2"
+            android:background="@drawable/shape_favorite_screen"
             app:layout_constraintTop_toBottomOf="@id/top_guideline_matches"
             app:layout_constraintBottom_toTopOf="@id/bottom_guideline_matches"
             app:layout_constraintLeft_toRightOf="@id/left_guideline_matches"

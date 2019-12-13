@@ -1,6 +1,5 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.TransitionManager
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import kotlinx.android.synthetic.main.matches_screen.view.*
 import javax.inject.Inject
@@ -67,6 +62,7 @@ class MatchesFragment : Fragment() {
 
 
 
+
        view.matchesschedule_recyclerview_mainactivity.addOnScrollListener(object :
             RecyclerView.OnScrollListener(){
 
@@ -92,12 +88,17 @@ class MatchesFragment : Fragment() {
 
 
         })
+        var current = "aaaa-aa-aa"
 
         viewModel.dateChangedLiveData.observe(this, Observer { date1 ->
 
+
             val arr =  date1.split("-")
+            val arrCurrent = current.split("-")
+            val currentDate = arrCurrent[0]+arrCurrent[1]+arrCurrent[2]
             val date = arr[0]+arr[1]+arr[2]
             for (c in date.indices){
+                if (date[c] != currentDate[c])
                 when(c) {
                     0 -> {
                         view.lottie_linearlayout_container.number_1_lottieview_itemmatchschedule
@@ -150,25 +151,35 @@ class MatchesFragment : Fragment() {
                 }
             }
 
+            current = date1
         })
 
-        viewModel.daysNumberLiveData.observe(this, Observer {date1 ->
+        var currentDays = "aa"
+
+        viewModel.daysNumberLiveData.observe(this, Observer {days ->
 
 
-
-
-            if (date1.length > 1) {
-                view.daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(date1[0].toString()))
-                view.daysleft_lottie_mainactivity.playAnimation()
-                view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(date1[1].toString()))
+            if (days.length > 1) {
+                if (currentDays[0] != days[0]) {
+                    view.daysleft_lottie_mainactivity.setAnimation(
+                        LottieAnimationsRaw.getRawFile(
+                            days[0].toString()
+                        )
+                    )
+                    view.daysleft_lottie_mainactivity.playAnimation()
+                }
+                view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(days[1].toString()))
                 view.daysright_lottie_mainactivity.playAnimation()
             }
             else {
-                view.daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile("0"))
-                view.daysleft_lottie_mainactivity.playAnimation()
-                view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(date1))
+                if (currentDays[0] != '0') {
+                    view.daysleft_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile("0"))
+                    view.daysleft_lottie_mainactivity.playAnimation()
+                }
+                view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(days))
                 view.daysright_lottie_mainactivity.playAnimation()
             }
+            currentDays = days
         })
 
 

@@ -15,6 +15,7 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
     private val useCase = matchesInteractor
     val matchesScheduleLiveData = MutableLiveData<Map<String,List<MatchScheduleModel>>>()
+    val matchesFavoriteLiveData = MutableLiveData<List<MatchScheduleModel>>()
     val daysNumberLiveData = MutableLiveData<String>()
     val dateChangedLiveData = MutableLiveData<String>()
     val checkToggleListener: MutableLiveData<Int> = MutableLiveData()
@@ -36,21 +37,33 @@ class MainViewModel @Inject constructor(
                       it.awayTeam,
                       it.homeScore,
                       it.homeTeam,
-                      it.group
+                      it.group,
+                      it.favorite
                   )
               }
           }
 
         }
 //        useCase.getMatches(10,10)
-//     val disposable =   useCase.getFavoriteMatches()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                it.map {
-//                    println("${it.favorite} ${it.id}")
-//                }
-//            }
+     val disposable =   useCase.getFavoriteMatches()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {list ->
+                matchesFavoriteLiveData.value = list.map {
+                    println("${it.favorite} ${it.id}")
+                   MatchScheduleModel(
+                        it.id,
+                        it.date,
+                        it.time,
+                        it.awayScore,
+                        it.awayTeam,
+                        it.homeScore,
+                        it.homeTeam,
+                        it.group,
+                       it.favorite
+                    )
+                }
+            }
         println("Testing appInjection !!")
     }
 

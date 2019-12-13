@@ -5,6 +5,7 @@ import com.ahmedmamdouh13.theleague.ui.di.module.AppModule
 import com.ahmedmamdouh13.theleague.ui.di.module.DataModule
 import com.ahmedmamdouh13.theleague.ui.di.module.ViewModelModule
 import com.ahmedmamdouh13.theleague.ui.di.scope.AppScope
+import com.ahmedmamdouh13.theleague.ui.view.FavoriteFragment
 import com.ahmedmamdouh13.theleague.ui.view.MatchesFragment
 import dagger.Component
 
@@ -14,4 +15,5 @@ interface AppComponent  {
 
     fun inject(activity: MainActivity)
     fun inject(fragment: MatchesFragment)
+    fun inject(favoriteFragment: FavoriteFragment)
 }
