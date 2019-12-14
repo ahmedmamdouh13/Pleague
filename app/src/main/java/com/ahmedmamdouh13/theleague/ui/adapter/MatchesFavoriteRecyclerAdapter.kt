@@ -7,11 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
-import kotlinx.android.synthetic.main.item_match.view.*
-import kotlinx.android.synthetic.main.item_match.view.favorite_container_itemmatch
-import kotlinx.android.synthetic.main.item_match.view.favorite_lottieview_itemmatch
 import kotlinx.android.synthetic.main.item_match_favorite.view.*
-import kotlin.math.roundToInt
 
 class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyclerAdapter.MatchesFavoriteViewHolder>() {
 
@@ -100,6 +96,7 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
             itemView.match_scheduleview_itemmatch_favorite.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch_favorite.team2Name = matchScheduleModel.awayTeam
             itemView.match_scheduleview_itemmatch_favorite.teamsgroup = matchScheduleModel.group
+            itemView.date_textview_item_matchfavorite.text = matchScheduleModel.date
 
             when(matchScheduleModel.homeScore){
                 -1 -> {

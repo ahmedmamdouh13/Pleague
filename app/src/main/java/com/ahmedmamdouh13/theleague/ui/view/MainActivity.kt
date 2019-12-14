@@ -2,33 +2,21 @@ package com.ahmedmamdouh13.theleague.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.View
-import android.view.animation.AlphaAnimation
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
-import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
 import com.ahmedmamdouh13.theleague.ui.custom.TouchGestures
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.transition.ChangeBounds
 import android.view.WindowManager
 import androidx.transition.*
 import com.ahmedmamdouh13.theleague.R
 
 class MainActivity : AppCompatActivity() , TouchGestures {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var touchListener: ScreenTouchListener
 
-    lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,8 +43,6 @@ class MainActivity : AppCompatActivity() , TouchGestures {
         (application as LeagueApplication)
             .appInjection()
             .inject(this)
-        viewModel = ViewModelProviders.of(this,viewModelFactory)[MainViewModel::class.java]
-
     }
 
     override fun click() {
@@ -65,7 +51,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
     override fun swipe(percent: Float) {
     }
 
-    var isScrolled = false
+    private var isScrolled = false
     override fun scroll(
         percentTop: Float,
         percentBottom: Float,
@@ -107,6 +93,7 @@ when(id){
         override fun onTransitionEnd(transition: Transition) {
             favorite_imageview_mainactivity.isEnabled = true
             matches_imageview_mainactivity.isEnabled = true
+
         }
 
         override fun onTransitionResume(transition: Transition) {
@@ -122,6 +109,7 @@ when(id){
         override fun onTransitionStart(transition: Transition) {
             favorite_imageview_mainactivity.isEnabled = false
             matches_imageview_mainactivity.isEnabled = false
+
         }
 
     })
@@ -151,7 +139,6 @@ when(id){
                 matches_imageview_mainactivity.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.GONE
                 matches_imageview_mainactivity.alpha = 1f
-
             }
             else ->{
                 if (isScrolled)

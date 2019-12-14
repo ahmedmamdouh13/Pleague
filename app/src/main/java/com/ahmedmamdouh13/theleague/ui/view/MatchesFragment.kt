@@ -20,6 +20,7 @@ import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.devi
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
+import kotlinx.android.synthetic.main.matches_screen.*
 import kotlinx.android.synthetic.main.matches_screen.view.*
 import javax.inject.Inject
 
@@ -163,7 +164,12 @@ class MatchesFragment : Fragment() {
 
         viewModel.daysNumberLiveData.observe(this, Observer {days ->
 
-
+            if(days == "TODAY"){
+                today_textview_matchesscreen.visibility = View.VISIBLE
+                daysuntil_container_matchesscreen.visibility = View.INVISIBLE
+            }else {
+                today_textview_matchesscreen.visibility = View.INVISIBLE
+                daysuntil_container_matchesscreen.visibility = View.VISIBLE
                 if (currentDays[0] != days[0]) {
                     view.daysleft_lottie_mainactivity.setAnimation(
                         LottieAnimationsRaw.getRawFile(
@@ -174,7 +180,7 @@ class MatchesFragment : Fragment() {
                 }
                 view.daysright_lottie_mainactivity.setAnimation(LottieAnimationsRaw.getRawFile(days[1].toString()))
                 view.daysright_lottie_mainactivity.playAnimation()
-
+            }
             currentDays = days
         })
 
