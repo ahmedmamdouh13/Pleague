@@ -12,7 +12,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_1_lottieview_itemmatchschedule"
@@ -21,7 +20,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_2_lottieview_itemmatchschedule"
@@ -30,7 +28,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_3_lottieview_itemmatchschedule"
@@ -39,7 +36,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_4_lottieview_itemmatchschedule"
@@ -47,14 +43,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:text="@string/date_separator"
             android:textSize="30sp"
             android:textColor="@color/colorAccent"
             />
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_5_lottieview_itemmatchschedule"
@@ -63,7 +58,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_6_lottieview_itemmatchschedule"
@@ -72,13 +66,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:text="-"
+            android:text="@string/date_separator"
             android:textColor="@color/colorAccent"
             />
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_7_lottieview_itemmatchschedule"
@@ -86,7 +79,6 @@
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="20dp"
             android:layout_height="25dp"
-            app:lottie_colorFilter="@color/colorAccent"
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:id="@+id/number_8_lottieview_itemmatchschedule"

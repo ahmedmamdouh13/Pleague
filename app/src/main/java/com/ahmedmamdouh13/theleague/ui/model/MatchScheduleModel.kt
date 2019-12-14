@@ -9,5 +9,6 @@ data class MatchScheduleModel(
     var homeScore: Int,
     var homeTeam: String,
     var group: String,
-    var favorite: Boolean
+    var favorite: Boolean,
+    var days: String
 )

@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ahmedmamdouh13.theleague.domain.interactor.MatchesInteractor
+import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,32 +19,39 @@ class MainViewModel @Inject constructor(
     val matchesFavoriteLiveData = MutableLiveData<List<MatchScheduleModel>>()
     val daysNumberLiveData = MutableLiveData<String>()
     val dateChangedLiveData = MutableLiveData<String>()
-    val checkToggleListener: MutableLiveData<Int> = MutableLiveData()
+    val checkToggleListener: MutableLiveData<MatchScheduleModel> = MutableLiveData()
     val unCheckToggleListener: MutableLiveData<Int> = MutableLiveData()
+    val matchesState: MutableLiveData<UiState> = MutableLiveData()
 
 
     init {
-      val d =   useCase.getMatches(30,0)
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe { l , e ->
-          matchesScheduleLiveData.value = l.mapValues { list ->
-              list.value.map {
-                  println(it.date + " da b3d b2a " + list.key)
-                  MatchScheduleModel(
-                      it.id,
-                      it.date,
-                      it.time,
-                      it.awayScore,
-                      it.awayTeam,
-                      it.homeScore,
-                      it.homeTeam,
-                      it.group,
-                      it.favorite
-                  )
-              }
-          }
 
-        }
+        matchesState.value = UiState.Loading
+
+        val d =     useCase.getMatches()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { l , e ->
+                //                if (l != null)
+                matchesScheduleLiveData.value = l.mapValues { list ->
+                    list.value.map {
+                        println(it.date + " da b3d b2a " + list.key)
+                        MatchScheduleModel(
+                            it.id,
+                            it.date,
+                            it.time,
+                            it.awayScore,
+                            it.awayTeam,
+                            it.homeScore,
+                            it.homeTeam,
+                            it.group,
+                            it.favorite,
+                            it.days
+                        )
+                    }
+                }
+                matchesState.value = UiState.Success
+
+            }
 //        useCase.getMatches(10,10)
      val disposable =   useCase.getFavoriteMatches()
             .subscribeOn(Schedulers.io())
@@ -60,7 +68,8 @@ class MainViewModel @Inject constructor(
                         it.homeScore,
                         it.homeTeam,
                         it.group,
-                       it.favorite
+                       it.favorite,
+                       it.days
                     )
                 }
             }
@@ -73,10 +82,23 @@ class MainViewModel @Inject constructor(
     }
 
 
-    val checkObserver = Observer<Int>{id ->
-        println("Checked $id")
+    val checkObserver = Observer<MatchScheduleModel>{model ->
+        println("Checked ${model.id}")
         Single.create<Unit> {
-            useCase.favoriteFixture(id)
+            useCase.favoriteFixture(
+                DomainModel(
+                    model.id,
+                    model.awayTeam,
+                    model.homeTeam,
+                    model.date,
+                    model.time,
+                    model.homeScore,
+                    model.awayScore,
+                    model.group,
+                    model.favorite,
+                    ""
+
+                ))
         }.subscribeOn(Schedulers.io())
             .subscribe()
     }

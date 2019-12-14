@@ -7,7 +7,6 @@ import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.domain.util.DateUitl
 import io.reactivex.Flowable
 import io.reactivex.Single
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl, scheduleMapper: ScheduleMapper) : MatchesInteractor {
@@ -16,31 +15,42 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
     private val util = dateUitl
     private val mapper = scheduleMapper
 
-    override fun getMatches(size: Int, index: Int): Single<Map<String,List<DomainModel>>>{
-       return repository.getMatches(size, index, util.getTodayInUtc())
+    override fun getMatches(): Single<Map<String,List<DomainModel>>>{
+       return repository.getMatches()
           .map  { domainList ->
-              mapper.getMatchesInScheduleForm( domainList.map {d ->
-                  println("so curious ${d.date}")
+              mapper.getMatchesInScheduleForm(domainList
+                  .filter {
+                      util.isDateValid(it.date)
+                  }
+
+                  .map {d ->
+                   d.favorite = repository.isMatchFavorite(d.id)
+                      println("so curious get ${d.homeTeam} ${d.favorite} ")
+
                   d.time = util.getTimeFromUtcDate(d.date)
                   d.date = util.getDateFromUtcDate(d.date)
-
-                  d
+                      d.days = util.daysUntilDate(d.date)
+                      d
               }
 
+
               )
+
           }
+
+
     }
 
 
     override fun getDaysUntilDate(s: String): String {
-        return if (util.isThisDayToday(s))
-            "TODAY"
+        return if (util.isThisDayToday(s)) "TODAY"
+        else if (!util.isDateValid(s)) "Ended"
         else
             util.daysUntilDate(s)
     }
 
-    override fun favoriteFixture(id: Int) {
-        repository.favoriteFixture(id)
+    override fun favoriteFixture(domainModel: DomainModel) {
+        repository.favoriteFixture(domainModel)
     }
 
     override fun unFavoriteFixture(id: Int) {
@@ -48,14 +58,12 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
     }
 
     override fun getFavoriteMatches(): Flowable<List<DomainModel>> {
-       return repository.getFavoriteMatches()
-           .map {
-               it.map {d ->
-                   println("so curious ${d.date}")
-                   d.time = util.getTimeFromUtcDate(d.date)
-                   d.date = util.getDateFromUtcDate(d.date)
-                   d
+       return repository.getFavoriteMatches().
+               map {
+                   it.map {d ->
+                       d.days = getDaysUntilDate(d.date)
+                       d
+                   }
                }
-           }
     }
 }

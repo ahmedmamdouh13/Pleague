@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.item_match.view.*
 class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.MatchesViewHolder>() {
 
     var list: List<MatchScheduleModel> = listOf()
-    var checkToggleListener = MutableLiveData<Int>()
+    var checkToggleListener = MutableLiveData<MatchScheduleModel>()
     var unCheckToggleListener = MutableLiveData<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesViewHolder {
@@ -33,7 +34,7 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
     }
 
     fun setFavoriteListeners(
-        checkListener: MutableLiveData<Int>,
+        checkListener: MutableLiveData<MatchScheduleModel>,
         unCheckListener: MutableLiveData<Int>
     ){
         checkToggleListener = checkListener
@@ -42,30 +43,40 @@ class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.Match
 
     inner class MatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var isChecked = false
 
         init {
             itemView.favorite_lottieview_itemmatch.setMaxProgress(0.5f)
             itemView.favorite_container_itemmatch.setOnClickListener {
-                if (!isChecked) {
-                    itemView.favorite_lottieview_itemmatch.speed = 1f
-                    itemView.favorite_lottieview_itemmatch.playAnimation()
-                    checkToggleListener.value = list[adapterPosition].id
-                    isChecked = true
+                if (!list[adapterPosition].favorite) {
+                    checkToggel()
                 }
                 else {
-                    itemView.favorite_lottieview_itemmatch.speed = -2f
-                    itemView.favorite_lottieview_itemmatch.playAnimation()
-
-                    unCheckToggleListener.value = list[adapterPosition].id
-                    isChecked = false
+                   unCheckToggel()
                 }
             }
+
+        }
+
+        fun checkToggel() {
+            itemView.favorite_lottieview_itemmatch.speed = 1f
+            itemView.favorite_lottieview_itemmatch.playAnimation()
+            list[adapterPosition].favorite = true
+            checkToggleListener.value = list[adapterPosition]
+        }
+        fun unCheckToggel(){
+            itemView.favorite_lottieview_itemmatch.speed = -2f
+            itemView.favorite_lottieview_itemmatch.playAnimation()
+            list[adapterPosition].favorite = false
+            unCheckToggleListener.value = list[adapterPosition].id
         }
 
         fun bind(matchScheduleModel: MatchScheduleModel) {
 
 
+                if (matchScheduleModel.favorite) {
+                    itemView.favorite_lottieview_itemmatch.speed = 1f
+                    itemView.favorite_lottieview_itemmatch.playAnimation()
+                }
 
             itemView.match_scheduleview_itemmatch.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch.team2Name = matchScheduleModel.awayTeam

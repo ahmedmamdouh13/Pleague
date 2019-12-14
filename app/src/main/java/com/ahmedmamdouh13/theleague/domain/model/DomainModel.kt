@@ -9,7 +9,8 @@ data class DomainModel(
     var homeScore: Int,
     var awayScore: Int,
     var group: String,
-    var favorite: Boolean
+    var favorite: Boolean,
+    var days: String
 )
 
 

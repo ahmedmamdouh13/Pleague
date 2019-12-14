@@ -3,6 +3,7 @@ package com.ahmedmamdouh13.theleague.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
@@ -24,7 +25,7 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
         }
 
     }
-    var checkToggleListener = MutableLiveData<Int>()
+    var checkToggleListener = MutableLiveData<MatchScheduleModel>()
     var unCheckToggleListener = MutableLiveData<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesFavoriteViewHolder {
@@ -45,7 +46,7 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
     }
 
     fun setFavoriteListeners(
-        checkListener: MutableLiveData<Int>,
+        checkListener: MutableLiveData<MatchScheduleModel>,
         unCheckListener: MutableLiveData<Int>
     ){
         checkToggleListener = checkListener
@@ -59,22 +60,11 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
 
         init {
 
-            itemView.favorite_container_itemmatch_favorite.setOnClickListener {
-//                if (!isChecked) {
-//
-////                    itemView.favorite_lottieview_itemmatch.speed = 1f
-////                    itemView.favorite_lottieview_itemmatch.playAnimation()
-//                    isChecked = true
-//                    checkToggleListener.value = list[adapterPosition].id
-//                }
-//                else {
-////                    itemView.favorite_lottieview_itemmatch.speed = -2f
-////                    itemView.favorite_lottieview_itemmatch.playAnimation()
+            itemView.favorite_lottieview_itemmatch_favorite.setOnClickListener {
                     if(adapterPosition != -1) {
                         positionRemoved = adapterPosition
                         unCheckToggleListener.value = list[adapterPosition].id
                     }
-//                }
             }
         }
 
@@ -89,12 +79,31 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
                 isChecked = false
             }
 
-//            itemView.away_team.text = matchScheduleModel.awayTeam
-//            itemView.home_team.text = matchScheduleModel.homeTeam
+            when {
+                matchScheduleModel.days == "Ended" -> {
+                    itemView.today_textview_matchfavorite.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.lighterdarkBackground
+                        )
+                    )
+                    itemView.today_textview_matchfavorite.text = itemView.context.getString(R.string.expired_date)
+                }
+                matchScheduleModel.days == "TODAY" -> {
+                    itemView.today_textview_matchfavorite.text = matchScheduleModel.days
+                    itemView.today_textview_matchfavorite.setTextColor(ContextCompat.getColor(itemView.context,R.color.colorAccent))
+
+                }
+                else -> {
+                    itemView.today_textview_matchfavorite.text = "${matchScheduleModel.days} Days"
+                    itemView.today_textview_matchfavorite.setTextColor(ContextCompat.getColor(itemView.context,android.R.color.white))
+                }
+            }
 
 
             itemView.match_scheduleview_itemmatch_favorite.team1Name = matchScheduleModel.homeTeam
             itemView.match_scheduleview_itemmatch_favorite.team2Name = matchScheduleModel.awayTeam
+            itemView.match_scheduleview_itemmatch_favorite.isLongVersion = false
             itemView.match_scheduleview_itemmatch_favorite.teamsgroup = matchScheduleModel.group
             itemView.date_textview_item_matchfavorite.text = matchScheduleModel.date
 
@@ -111,9 +120,6 @@ class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyc
                 }
             }
             itemView.match_scheduleview_itemmatch_favorite.invalidate()
-
-//            itemView.match_scheduleview_itemmatch.teamsgroup = matchScheduleModel
-
         }
 
     }

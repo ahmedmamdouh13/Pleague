@@ -18,6 +18,7 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
     var team1Name = "team1"
     var team2Name = "team2"
     var textSize = 30f
+    var isLongVersion = true
 
     var isMatchPlayed1 = false
 
@@ -60,10 +61,11 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
 
         my=(height/4).toFloat()
 
-        canvas.translate(0f,-10f)
-        canvas.drawText(teamsgroup,0f,0f,textPaint)
-        canvas.translate(0f,10f)
-
+        if (isLongVersion) {
+            canvas.translate(0f, -10f)
+            canvas.drawText(teamsgroup, 0f, 0f, textPaint)
+            canvas.translate(0f, 5f)
+        }
 
         canvas.save()
         drawSchShape(canvas, team1Name,team2Name,matchTimeText,matchResult1,isMatchPlayed1)
@@ -82,29 +84,26 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
                              , dateText1: String
                              , matchResult: String, isMatchPlayed:Boolean) {
 
-        canvas.translate(0f,0f)
+            canvas.translate(0f, 0f)
+        if (isLongVersion) {
+            canvas.translate(0f, my / 2)
+            canvas.drawLine(-mx - 4f, 0f, mx + 4f, 0f, paint)   //horizontal line
+        }
 
-        canvas.translate(0f,my)
+            canvas.translate(0f, -my)
 
-        canvas.drawLine(-mx-4f,0f,mx+4f,0f,paint)   //horizontal line
+            canvas.translate(-mx, my)
 
-        canvas.translate(0f,-my)
-
-        canvas.translate(-mx ,my)
-
-
-        canvas.drawLine(0f,0f,0f,my,paint)    //vertical left line
-
-
+        if (isLongVersion)
+            canvas.drawLine(0f, 0f, 0f, my, paint)    //vertical left line
 
 
+            canvas.translate(mx, -my)
 
-        canvas.translate(mx ,-my)
+            canvas.translate(mx, my)
 
-        canvas.translate(mx,my)
-
-            canvas.drawLine(0f,0f,0f,my,paint) //vertical right line
-
+        if (isLongVersion)
+            canvas.drawLine(0f, 0f, 0f, my, paint) //vertical right line
 
 
                 canvas.save()
@@ -153,7 +152,6 @@ class ScheduleView(context: Context, attrs: AttributeSet?) : FrameLayout(context
         textPaint: Paint
     ) {
         val layers = team1Name.split(" ")
-        var separator = 0
 //        if (layers.size <= 3)
 //        for (t in layers) {
 //            separator += 2

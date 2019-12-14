@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
@@ -8,9 +7,10 @@
     >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:id="@+id/container_scheduleview_itemmatch_favorite"
         android:layout_marginTop="16dp"
+        android:layout_gravity="center"
         android:background="@drawable/shape_appbar2"
 
         >
@@ -18,8 +18,8 @@
 
         <com.ahmedmamdouh13.theleague.ui.custom.ScheduleView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_gravity="start"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:id="@+id/match_scheduleview_itemmatch_favorite"
             android:layout_above="@id/border"
 
@@ -42,65 +42,31 @@
 
 
             >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="@string/today"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_margin="16dp"
+                android:layout_gravity="start|center"
+                android:gravity="center"
+                android:id="@+id/today_textview_matchfavorite"
+                />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2019 - 12 - 15"
+                android:text="2019-12-15"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/date_textview_item_matchfavorite"
                 android:textStyle="italic"
                 android:textColor="@color/lighterdarkBackground"
                 />
-            <androidx.cardview.widget.CardView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="start|center"
-                app:cardBackgroundColor="@color/darkbackground"
-                android:layout_margin="16dp"
-                app:cardElevation="0dp"
 
-
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center"
-                        >
-
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"
-                            android:id="@+id/daysleft_lottie_mainactivity"
-                            android:layout_gravity="center"
-                            app:lottie_rawRes="@raw/number_0"
-                            app:lottie_autoPlay="true"
-                            />
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:layout_width="20dp"
-                            android:layout_height="25dp"
-                            android:id="@+id/daysright_lottie_mainactivity"
-                            android:layout_gravity="center"
-                            app:lottie_rawRes="@raw/number_0"
-                            app:lottie_autoPlay="true"
-                            />
-                    </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Days"
-                        android:gravity="center"
-                        android:layout_gravity="bottom|center"
-                        />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

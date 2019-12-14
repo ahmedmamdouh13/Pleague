@@ -1,6 +1,7 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
+import com.ahmedmamdouh13.theleague.presentaion.UiState
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
@@ -22,6 +23,7 @@ import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import kotlinx.android.synthetic.main.matches_screen.*
 import kotlinx.android.synthetic.main.matches_screen.view.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 class MatchesFragment : Fragment() {
@@ -42,12 +44,22 @@ class MatchesFragment : Fragment() {
         if (resources.getBoolean(R.bool.isPortrait))
             view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
         else
-            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(
-                deviceHeight, deviceWidth)
+            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceHeight, deviceWidth)
 
 
         viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
+
+        viewModel.matchesState.observe(this, Observer {
+            when(it){
+                UiState.Loading -> {
+                    lottie_linearlayout_container.visibility = View.INVISIBLE
+                }
+                else ->{
+                    lottie_linearlayout_container.visibility = View.VISIBLE
+                }
+                }
+        })
 
         val adapter = MatchesScheduleRecyclerAdapter().apply {
             setListener(viewModel.checkToggleListener,viewModel.unCheckToggleListener)
@@ -55,9 +67,12 @@ class MatchesFragment : Fragment() {
                 list = it
                 notifyDataSetChanged()
                 viewModel.daysUntilMatch(it.keys.toList().first())
-
             })
+
+
+
         }
+
         var cntFlag = 0
 
        view.matchesschedule_recyclerview_mainactivity.itemAnimator = DefaultItemAnimator()
@@ -82,14 +97,11 @@ class MatchesFragment : Fragment() {
                         .findFirstVisibleItemPosition()
 
                 if (cntFlag != itemPosition && itemPosition >= 0) {
-
-
                     val date1 = adapter.list.keys.toList()[itemPosition]
                     viewModel.daysUntilMatch(date1)
-
                 }
-                cntFlag = itemPosition
 
+                cntFlag = itemPosition
             }
 
 

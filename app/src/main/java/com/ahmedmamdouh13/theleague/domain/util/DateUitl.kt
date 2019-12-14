@@ -1,8 +1,10 @@
 package com.ahmedmamdouh13.theleague.domain.util
 
+import android.annotation.SuppressLint
 import com.ahmedmamdouh13.theleague.ui.Constants
 import java.lang.Exception
 import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -12,13 +14,10 @@ import kotlin.math.round
 
 class DateUitl @Inject constructor() {
 
-
-
-
+    @SuppressLint("SimpleDateFormat")
     fun getTimeFromUtcDate(date: String): String{
       return  try {
           val utcDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-          val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
           val timeFormat = SimpleDateFormat("hh:mm a")
           utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
@@ -38,6 +37,7 @@ class DateUitl @Inject constructor() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun isThisDayToday(date: String): Boolean{
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
@@ -49,6 +49,7 @@ class DateUitl @Inject constructor() {
         return todayDate == match
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun getTodayInUtc(): String {
         val utcDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         utcDateFormat.timeZone = TimeZone.getTimeZone("UTC")
@@ -59,6 +60,7 @@ class DateUitl @Inject constructor() {
         return s
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun getDateFromUtcDate(date: String): String {
         val utcDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -68,6 +70,7 @@ class DateUitl @Inject constructor() {
 
         return dateFormat.format(utcDate)
     }
+    @SuppressLint("SimpleDateFormat")
     fun daysUntilDate(s: String): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
@@ -88,5 +91,20 @@ class DateUitl @Inject constructor() {
         }
     }
 
-
+    @SuppressLint("SimpleDateFormat")
+    fun isDateValid(date: String): Boolean {
+     return  try {
+         val utcDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+         val matchDate = utcDateFormat.parse(date)
+         val today = utcDateFormat.format(Calendar.getInstance().time)
+         val todayDate = utcDateFormat.parse(today)
+         todayDate.before(matchDate) || isThisDayToday(date)
+     }catch (e: ParseException){
+         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+         val matchDate = dateFormat.parse(date)
+         val today = dateFormat.format(Calendar.getInstance().time)
+         val todayDate = dateFormat.parse(today)
+          todayDate.before(matchDate) || isThisDayToday(date)
+        }
+    }
 }

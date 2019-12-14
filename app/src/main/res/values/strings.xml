@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="today">TODAY</string>
+    <string name="pleague">PLEAGUE</string>
+    <string name="days">Days</string>
+    <string name="date_separator">-</string>
+    <string name="expired_date">Expired</string>
 </resources>

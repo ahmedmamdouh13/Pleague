@@ -5,22 +5,23 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "match")
-class MatchEntity {
+data class MatchEntity (
 
-    @PrimaryKey(autoGenerate = false)
-    var id = 0
+    @PrimaryKey(autoGenerate = false) var id :Int = 0,
 
-    var homeScore = -1
+    var homeScore: Int = -1,
 
-    var awayScore = -1
+    var awayScore: Int = -1,
 
-    var date = ""
+    var date: String = "",
 
-    var homeTeam = ""
+    var homeTeam: String = "",
 
-    var awayTeam = ""
+    var awayTeam: String = "",
 
-    var group = ""
+    var group: String = "",
 
-    var isFavorite = false
-}
+    var time: String = "",
+
+    var isFavorite: Boolean = false
+)

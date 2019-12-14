@@ -5,9 +5,9 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 
 interface MatchesInteractor {
-    fun getMatches(size: Int, index: Int): Single<Map<String, List<DomainModel>>>
+    fun getMatches(): Single<Map<String, List<DomainModel>>>
     fun getDaysUntilDate(s: String): String
-    fun favoriteFixture(id: Int)
+    fun favoriteFixture(domainModel: DomainModel)
     fun unFavoriteFixture(id: Int)
     fun getFavoriteMatches(): Flowable<List<DomainModel>>
 

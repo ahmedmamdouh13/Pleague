@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_matchschedule.view.*
 class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyclerAdapter.MatchesScheduleViewHolder>() {
 
     var list: Map<String,List<MatchScheduleModel>> = hashMapOf()
-    var checkListener = MutableLiveData<Int>()
+    var checkListener = MutableLiveData<MatchScheduleModel>()
     var unCheckListener = MutableLiveData<Int>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesScheduleViewHolder {
@@ -38,7 +38,7 @@ class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyc
     }
 
     fun setListener(
-        checkToggleListener: MutableLiveData<Int>,
+        checkToggleListener: MutableLiveData<MatchScheduleModel>,
         unCheckToggleListener: MutableLiveData<Int>
     ){
         checkListener = checkToggleListener

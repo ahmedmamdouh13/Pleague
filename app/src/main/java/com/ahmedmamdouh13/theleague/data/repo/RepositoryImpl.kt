@@ -2,68 +2,57 @@ package com.ahmedmamdouh13.theleague.data.repo
 
 import com.ahmedmamdouh13.theleague.data.local.MatchEntity
 import com.ahmedmamdouh13.theleague.data.local.MatchesDao
+import com.ahmedmamdouh13.theleague.data.mapper.EntityMapper
+import com.ahmedmamdouh13.theleague.data.pojo.Match
 import com.ahmedmamdouh13.theleague.data.remote.LeagueService
 import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.domain.Repository
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.SingleObserver
 import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: LeagueService) : Repository {
+class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
+                                         leagueService: LeagueService,
+                                         mapperEntity: EntityMapper
+) : Repository {
     private val dao = matchesDao
     private val service = leagueService
+    private val mapper = mapperEntity
 
-    override fun getMatches(offset: Int, index: Int, todayInUtc: String): Single<List<DomainModel>>  {
+    override fun getMatches(): Single<List<DomainModel>> {
 
-        val disposable = service.getMatches()
-            .subscribeOn(Schedulers.io())
-            .subscribe { list, e ->
-                if (list != null) {
-                    val matchesList = list.matches.map { match ->
-//                        println("this is what it is actually ${match.utcDate}")
+        return object : Single<List<DomainModel>>() {
+            override fun subscribeActual(observer: SingleObserver<in List<DomainModel>>) {
 
-                        MatchEntity().apply {
-                            id = match.id
-                            awayTeam = match.awayTeam.name
-                            homeTeam = match.homeTeam.name
-                            date = match.utcDate
-                            homeScore = match.score.fullTime.homeTeam
-                            awayScore = match.score.fullTime.awayTeam
-                            group = match.group
+       val d = service.getMatches()
+                    .subscribeOn(Schedulers.io())
+                    .map {
+                        it.matches
+                            .map { match ->
+                                updateDatabase(match)
+                                mapper.mapMatchToDomain(match)
                         }
                     }
-                    dao.insertMatchesList(matchesList)
-                }
-        }
-        return dao.getMatches(100, 0, todayInUtc)
-            .map {
-            it.map { list ->
-                println("this is what it is actually ${list.date}")
+            .subscribe { listmapped  , e->
+                       observer.onSuccess(listmapped)
+                    }
+            }
 
-                DomainModel(
-                    list.id,
-                    list.awayTeam,
-                    list.homeTeam,
-                    list.date,
-                    "",
-                    list.homeScore,
-                    list.awayScore,
-                    list.group,
-                    list.isFavorite
-                )
 
         }
-
-
-    }.subscribeOn(Schedulers.io())
-
 
     }
 
-    override fun favoriteFixture(id: Int) {
-        dao.favoriteMatch(id)
+    private fun updateDatabase(match: Match) {
+        dao.updateFavorites(match.score.fullTime.awayTeam,
+            match.score.fullTime.homeTeam,
+            match.id)
+    }
+
+    override fun favoriteFixture(domainModel: DomainModel) {
+        dao.favoriteMatch(mapper.mapDomainToEntity(domainModel))
     }
 
     override fun unFavoriteFixture(id: Int) {
@@ -71,22 +60,12 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,leagueService: L
     }
 
     override fun getFavoriteMatches(): Flowable<List<DomainModel>> =
-        dao.getFavoriteMatches() .map {
+        dao.getFavoriteMatches().map {
             it.map { list ->
-
-                DomainModel(
-                    list.id,
-                    list.awayTeam,
-                    list.homeTeam,
-                    list.date,
-                    "",
-                    list.homeScore,
-                    list.awayScore,
-                    list.group,
-                    list.isFavorite
-                )
-
+                mapper.mapEntityToDomain(list)
             }
-
         }
+
+    override fun isMatchFavorite(id: Int): Boolean = dao.getisFavoriteFromMatches(id)
+
 }

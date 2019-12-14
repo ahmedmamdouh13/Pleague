@@ -9,13 +9,21 @@ import com.ahmedmamdouh13.theleague.ui.custom.TouchGestures
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 import android.view.WindowManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.transition.*
 import com.ahmedmamdouh13.theleague.R
+import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
+import com.ahmedmamdouh13.theleague.presentaion.UiState
 
 class MainActivity : AppCompatActivity() , TouchGestures {
 
     @Inject
     lateinit var touchListener: ScreenTouchListener
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +42,19 @@ class MainActivity : AppCompatActivity() , TouchGestures {
 //            top_guideline.setGuidelinePercent(0f)
 //            bottom_guideline.setGuidelinePercent(1f)
 //        }
+
+
+        viewModel.matchesState.observe(this, Observer {
+            when(it){
+                UiState.Loading -> progress_activitymain.visibility = View.VISIBLE
+                    UiState.Success -> progress_activitymain.visibility = View.INVISIBLE
+                UiState.Error -> {
+                    progress_activitymain.visibility = View.INVISIBLE
+                }
+
+            }
+        })
+
         touchListener.setTouchGestures(this)
         favorite_imageview_mainactivity.setOnTouchListener(touchListener)
 
@@ -43,6 +64,7 @@ class MainActivity : AppCompatActivity() , TouchGestures {
         (application as LeagueApplication)
             .appInjection()
             .inject(this)
+        viewModel = ViewModelProviders.of(this,viewModelFactory)[MainViewModel::class.java]
     }
 
     override fun click() {
@@ -163,6 +185,7 @@ when(id){
 
             }
         }
+        progress_activitymain.bringToFront()
         isScrolled = false
 
     }
@@ -197,6 +220,8 @@ when(id){
                 matches_imageview_mainactivity.alpha = 0f
             }
         }
+        progress_activitymain.bringToFront()
+
         isScrolled = false
     }
 }
