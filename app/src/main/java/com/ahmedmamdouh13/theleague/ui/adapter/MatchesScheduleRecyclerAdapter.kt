@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
-import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
+import com.ahmedmamdouh13.theleague.presentaion.model.MatchScheduleModel
 import kotlinx.android.synthetic.main.item_matchschedule.view.*
 
 
@@ -47,8 +47,8 @@ class MatchesScheduleRecyclerAdapter : RecyclerView.Adapter<MatchesScheduleRecyc
    inner class MatchesScheduleViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
        val matchesItemDecorator = MatchesItemDecorator(15)
        fun bind(
-            matchScheduleModel: List<MatchScheduleModel>?,
-            date1: String
+           matchScheduleModel: List<MatchScheduleModel>?,
+           date1: String
         ) {
             itemView.date_textview_item_matchschedule.text = date1
 

@@ -1,14 +1,14 @@
 package com.ahmedmamdouh13.theleague.presentaion.mapper
 
 import com.ahmedmamdouh13.theleague.domain.model.DomainModel
-import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
+import com.ahmedmamdouh13.theleague.presentaion.model.MatchScheduleModel
 import javax.inject.Inject
 
 class ModelMapper @Inject constructor(){
 
 
     fun mapDomainToModel(it: DomainModel)
-    =  MatchScheduleModel(
+    = MatchScheduleModel(
         it.id,
         it.date,
         it.time,

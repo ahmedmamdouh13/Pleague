@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
-import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
+import com.ahmedmamdouh13.theleague.presentaion.model.MatchScheduleModel
 import kotlinx.android.synthetic.main.item_match.view.*
 
 class MatchesRecyclerAdapter : RecyclerView.Adapter<MatchesRecyclerAdapter.MatchesViewHolder>() {

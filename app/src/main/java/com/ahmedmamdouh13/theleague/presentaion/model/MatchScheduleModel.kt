@@ -1,4 +1,4 @@
-package com.ahmedmamdouh13.theleague.ui.model
+package com.ahmedmamdouh13.theleague.presentaion.model
 
 data class MatchScheduleModel(
     var id: Int,

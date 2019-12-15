@@ -7,7 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.ahmedmamdouh13.theleague.R
-import com.ahmedmamdouh13.theleague.ui.model.MatchScheduleModel
+import com.ahmedmamdouh13.theleague.presentaion.model.MatchScheduleModel
 import kotlinx.android.synthetic.main.item_match_favorite.view.*
 
 class MatchesFavoriteRecyclerAdapter : RecyclerView.Adapter<MatchesFavoriteRecyclerAdapter.MatchesFavoriteViewHolder>() {
