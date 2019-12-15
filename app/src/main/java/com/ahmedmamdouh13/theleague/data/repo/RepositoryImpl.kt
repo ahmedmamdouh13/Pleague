@@ -36,7 +36,10 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
                         }
                     }
             .subscribe { listmapped  , e->
+                if (listmapped != null)
                        observer.onSuccess(listmapped)
+                else
+                    e.printStackTrace()
                     }
             }
 
@@ -52,11 +55,17 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
     }
 
     override fun favoriteFixture(domainModel: DomainModel) {
-        dao.favoriteMatch(mapper.mapDomainToEntity(domainModel))
+        Single.create<Unit> {
+            dao.favoriteMatch(mapper.mapDomainToEntity(domainModel))
+        }.subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     override fun unFavoriteFixture(id: Int) {
-        dao.unFavoriteMatch(id)
+        Single.create<Unit> {
+            dao.unFavoriteMatch(id)
+        }.subscribeOn(Schedulers.io())
+            .subscribe()
     }
 
     override fun getFavoriteMatches(): Flowable<List<DomainModel>> =

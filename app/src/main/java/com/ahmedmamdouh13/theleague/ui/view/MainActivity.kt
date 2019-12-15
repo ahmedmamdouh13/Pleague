@@ -16,6 +16,8 @@ import androidx.transition.*
 import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.presentaion.UiState
+import com.ahmedmamdouh13.theleague.ui.util.InternetConnection
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() , TouchGestures {
 
@@ -31,10 +33,40 @@ class MainActivity : AppCompatActivity() , TouchGestures {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
      init()
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.matches_screen_activitymain,MatchesFragment())
-            .replace(R.id.favorite_screen_activitymain,FavoriteFragment()).commit()
 
+
+        if (!InternetConnection.isNetworkAvailable(this)) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.favorite_screen_activitymain,FavoriteFragment()).commit()
+            expand(R.id.favorite_imageview_mainactivity)
+            matches_imageview_mainactivity.setOnTouchListener(null)
+            matches_imageview_mainactivity.setOnClickListener {
+                if (!InternetConnection.isNetworkAvailable(this))
+                showNoConnectionMsg("No Internet !")
+                else {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.matches_screen_activitymain,MatchesFragment()).commit()
+                    expand(R.id.matches_imageview_mainactivity)
+                    it.setOnClickListener(null)
+                    it.setOnTouchListener(touchListener)
+
+                }
+            }
+        }
+        else
+        {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.matches_screen_activitymain,MatchesFragment())
+                .replace(R.id.favorite_screen_activitymain,FavoriteFragment()).commit()
+        }
+
+//        viewModel.matchesState.observe(this, Observer {
+//            when(it){
+//                UiState.Error -> {
+//                    expand(R.id.favorite_imageview_mainactivity)
+//                }
+//            }
+//        })
 //        favorite_screen_activitymain.setOnClickListener {
 //            TransitionManager.beginDelayedTransition(favorite_screen_container_activitymain)
 //            left_guideline.setGuidelinePercent(0f)
@@ -44,19 +76,15 @@ class MainActivity : AppCompatActivity() , TouchGestures {
 //        }
 
 
-        viewModel.matchesState.observe(this, Observer {
-            when(it){
-                UiState.Loading -> progress_activitymain.visibility = View.VISIBLE
-                    UiState.Success -> progress_activitymain.visibility = View.INVISIBLE
-                UiState.Error -> {
-                    progress_activitymain.visibility = View.INVISIBLE
-                }
 
-            }
-        })
 
         touchListener.setTouchGestures(this)
         favorite_imageview_mainactivity.setOnTouchListener(touchListener)
+
+    }
+
+    private fun showNoConnectionMsg(msg: String) {
+        Snackbar.make(main_container_mainactivity,msg,Snackbar.LENGTH_LONG).show()
 
     }
 
@@ -115,7 +143,6 @@ when(id){
         override fun onTransitionEnd(transition: Transition) {
             favorite_imageview_mainactivity.isEnabled = true
             matches_imageview_mainactivity.isEnabled = true
-
         }
 
         override fun onTransitionResume(transition: Transition) {
@@ -137,36 +164,30 @@ when(id){
     })
 
     override fun expand(id: Int) {
-
-
         when(id){
             favorite_imageview_mainactivity.id ->{
-
                 matches_imageview_mainactivity.bringToFront()
                 if (isScrolled)
                 matches_screen_activitymain.visibility = View.INVISIBLE
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
-
                 left_guideline.setGuidelinePercent(0f)
                 top_guideline.setGuidelinePercent(0f)
                 left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
-//                favorite_imageview_mainactivity.alpha = 0f
                 matches_imageview_mainactivity.setOnTouchListener(touchListener)
                 favorite_imageview_mainactivity.setOnTouchListener(null)
                 matches_screen_activitymain.bringToFront()
                 matches_screen_activitymain.alpha = 1f
                 matches_screen_activitymain.visibility = View.VISIBLE
                 matches_imageview_mainactivity.visibility = View.VISIBLE
-                favorite_imageview_mainactivity.visibility = View.GONE
                 matches_imageview_mainactivity.alpha = 1f
+                favorite_imageview_mainactivity.visibility = View.GONE
             }
             else ->{
                 if (isScrolled)
                 favorite_screen_activitymain.visibility = View.INVISIBLE
                 favorite_imageview_mainactivity.bringToFront()
-
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
                 left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
@@ -181,11 +202,8 @@ when(id){
                 favorite_screen_activitymain.visibility = View.VISIBLE
                 favorite_imageview_mainactivity.visibility = View.VISIBLE
                 matches_imageview_mainactivity.visibility = View.GONE
-
-
             }
         }
-        progress_activitymain.bringToFront()
         isScrolled = false
 
     }
@@ -220,7 +238,6 @@ when(id){
                 matches_imageview_mainactivity.alpha = 0f
             }
         }
-        progress_activitymain.bringToFront()
 
         isScrolled = false
     }

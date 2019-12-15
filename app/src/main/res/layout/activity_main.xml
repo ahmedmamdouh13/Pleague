@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shape_appbar"
+    android:id="@+id/main_container_mainactivity"
 
     >
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -130,12 +131,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/progress_activitymain"
-        android:translationZ="2dp"
-        />
 
 </FrameLayout>

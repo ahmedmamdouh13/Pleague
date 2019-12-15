@@ -20,6 +20,7 @@ import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
+import com.ahmedmamdouh13.theleague.ui.util.InternetConnection
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import kotlinx.android.synthetic.main.matches_screen.*
 import kotlinx.android.synthetic.main.matches_screen.view.*
@@ -40,12 +41,21 @@ class MatchesFragment : Fragment() {
     ): View? {
         init()
         val view = inflater.inflate(R.layout.matches_screen, null, false)
-
-        if (resources.getBoolean(R.bool.isPortrait))
             view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
-        else
-            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceHeight, deviceWidth)
+        if (InternetConnection.isNetworkAvailable(context!!)) {
+            viewModel.initMatches()
+        }
+        viewModel.matchesState.observe(this, Observer {
+            when(it){
+                UiState.Loading -> view.progress_matchesfragment.visibility = View.VISIBLE
+                UiState.Success -> view.progress_matchesfragment.visibility = View.INVISIBLE
+                UiState.Error -> {
+                    view.progress_matchesfragment.visibility = View.INVISIBLE
+                }
 
+
+            }
+        })
 
         viewModel.checkToggleListener.observe(this,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(this, viewModel.unCheckObserver)
@@ -63,7 +73,7 @@ class MatchesFragment : Fragment() {
 
         val adapter = MatchesScheduleRecyclerAdapter().apply {
             setListener(viewModel.checkToggleListener,viewModel.unCheckToggleListener)
-            viewModel.matchesScheduleLiveData.observe(viewLifecycleOwner, Observer {
+            viewModel.matchesScheduleLiveData.observe(this@MatchesFragment, Observer {
                 list = it
                 notifyDataSetChanged()
                 viewModel.daysUntilMatch(it.keys.toList().first())
