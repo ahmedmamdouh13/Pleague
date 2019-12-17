@@ -22,14 +22,11 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
                   .filter {
                       util.isDateValid(it.date)
                   }
-
                   .map {d ->
                    d.favorite = repository.isMatchFavorite(d.id)
-                      println("so curious get ${d.homeTeam} ${d.favorite} ")
-
                   d.time = util.getTimeFromUtcDate(d.date)
                   d.date = util.getDateFromUtcDate(d.date)
-                      d.days = util.daysUntilDate(d.date)
+                   d.days = util.daysUntilDate(d.date)
                       d
               }
 
@@ -45,8 +42,7 @@ class GetMatchesUseCase @Inject constructor(repo: Repository, dateUitl: DateUitl
     override fun getDaysUntilDate(s: String): String {
         return if (util.isThisDayToday(s)) "TODAY"
         else if (!util.isDateValid(s)) "Ended"
-        else
-            util.daysUntilDate(s)
+        else util.daysUntilDate(s)
     }
 
     override fun favoriteFixture(domainModel: DomainModel) {

@@ -1,23 +1,23 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.transition.AutoTransition
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
+import com.ahmedmamdouh13.theleague.R
+import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
 import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
 import com.ahmedmamdouh13.theleague.ui.custom.TouchGestures
-import kotlinx.android.synthetic.main.activity_main.*
-import javax.inject.Inject
-import android.view.WindowManager
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.transition.*
-import com.ahmedmamdouh13.theleague.R
-import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
-import com.ahmedmamdouh13.theleague.presentaion.UiState
 import com.ahmedmamdouh13.theleague.ui.util.InternetConnection
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() , TouchGestures {
 
@@ -59,23 +59,6 @@ class MainActivity : AppCompatActivity() , TouchGestures {
                 .replace(R.id.matches_screen_activitymain,MatchesFragment())
                 .replace(R.id.favorite_screen_activitymain,FavoriteFragment()).commit()
         }
-
-//        viewModel.matchesState.observe(this, Observer {
-//            when(it){
-//                UiState.Error -> {
-//                    expand(R.id.favorite_imageview_mainactivity)
-//                }
-//            }
-//        })
-//        favorite_screen_activitymain.setOnClickListener {
-//            TransitionManager.beginDelayedTransition(favorite_screen_container_activitymain)
-//            left_guideline.setGuidelinePercent(0f)
-//            right_guideline.setGuidelinePercent(1f)
-//            top_guideline.setGuidelinePercent(0f)
-//            bottom_guideline.setGuidelinePercent(1f)
-//        }
-
-
 
 
         touchListener.setTouchGestures(this)
@@ -137,12 +120,15 @@ when(id){
 
     private val autoTransition = AutoTransition().apply {
         duration = 250
-    }
 
-    val transitionSet = autoTransition.addListener(object : Transition.TransitionListener {
+    }.addListener(object : Transition.TransitionListener {
         override fun onTransitionEnd(transition: Transition) {
             favorite_imageview_mainactivity.isEnabled = true
             matches_imageview_mainactivity.isEnabled = true
+        }
+        override fun onTransitionStart(transition: Transition) {
+            favorite_imageview_mainactivity.isEnabled = false
+            matches_imageview_mainactivity.isEnabled = false
         }
 
         override fun onTransitionResume(transition: Transition) {
@@ -154,14 +140,8 @@ when(id){
 
         override fun onTransitionCancel(transition: Transition) {
         }
-
-        override fun onTransitionStart(transition: Transition) {
-            favorite_imageview_mainactivity.isEnabled = false
-            matches_imageview_mainactivity.isEnabled = false
-
-        }
-
     })
+
 
     override fun expand(id: Int) {
         when(id){
@@ -175,37 +155,50 @@ when(id){
                 top_guideline.setGuidelinePercent(0f)
                 left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
-                matches_imageview_mainactivity.setOnTouchListener(touchListener)
-                favorite_imageview_mainactivity.setOnTouchListener(null)
-                matches_screen_activitymain.bringToFront()
-                matches_screen_activitymain.alpha = 1f
-                matches_screen_activitymain.visibility = View.VISIBLE
-                matches_imageview_mainactivity.visibility = View.VISIBLE
-                matches_imageview_mainactivity.alpha = 1f
-                favorite_imageview_mainactivity.visibility = View.GONE
+
+                transitionSettings(favorite_screen_activitymain,
+                    matches_screen_activitymain,
+                    favorite_imageview_mainactivity,
+                    matches_imageview_mainactivity)
             }
             else ->{
+
                 if (isScrolled)
                 favorite_screen_activitymain.visibility = View.INVISIBLE
+
                 favorite_imageview_mainactivity.bringToFront()
                 TransitionManager
                     .beginDelayedTransition(favorite_screen_container_activitymain,autoTransition)
+
                 left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 top_guideline.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
                 left_guideline_matches.setGuidelinePercent(0f)
                 top_guideline_matches.setGuidelinePercent(0f)
-                favorite_imageview_mainactivity.alpha = 1f
-                matches_imageview_mainactivity.setOnTouchListener(null)
-                favorite_imageview_mainactivity.setOnTouchListener(touchListener)
-                favorite_screen_activitymain.bringToFront()
-                favorite_screen_activitymain.alpha = 1f
-                favorite_screen_activitymain.visibility = View.VISIBLE
-                favorite_imageview_mainactivity.visibility = View.VISIBLE
-                matches_imageview_mainactivity.visibility = View.GONE
+
+                transitionSettings(
+                    matches_screen_activitymain,
+                    favorite_screen_activitymain,
+                    matches_imageview_mainactivity,
+                    favorite_imageview_mainactivity
+                )
+
             }
         }
         isScrolled = false
+    }
 
+    fun transitionSettings(containerExpand: View,
+                           containerCollapse: View,
+                           overlayExpand: View,
+                           overlayCollapse: View){
+        overlayCollapse.setOnTouchListener(touchListener)
+        overlayExpand.setOnTouchListener(null)
+        containerCollapse.bringToFront()
+        containerCollapse.alpha = 1f
+        containerCollapse.visibility = View.VISIBLE
+        overlayCollapse.visibility = View.VISIBLE
+        overlayCollapse.alpha = 1f
+        overlayExpand.visibility = View.GONE
     }
 
     override fun collapse(id: Int) {

@@ -1,6 +1,9 @@
 package com.ahmedmamdouh13.theleague.data.local
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -28,7 +31,7 @@ interface MatchesDao {
     @Query(" SELECT isFavorite FROM `match` WHERE id = :id")
     fun getisFavoriteFromMatches(id: Int): Boolean
 
-    @Query("UPDATE `match` SET awayScore = :awayScore AND homeScore = :homeScore WHERE id = :id  ")
+    @Query("UPDATE `match` SET awayScore = :awayScore , homeScore = :homeScore WHERE id = :id")
     fun updateFavorites(awayScore: Int, homeScore: Int, id: Int)
 
 }

@@ -1,12 +1,11 @@
 package com.ahmedmamdouh13.theleague.data.repo
 
-import com.ahmedmamdouh13.theleague.data.local.MatchEntity
 import com.ahmedmamdouh13.theleague.data.local.MatchesDao
 import com.ahmedmamdouh13.theleague.data.mapper.EntityMapper
 import com.ahmedmamdouh13.theleague.data.pojo.Match
 import com.ahmedmamdouh13.theleague.data.remote.LeagueService
-import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import com.ahmedmamdouh13.theleague.domain.Repository
+import com.ahmedmamdouh13.theleague.domain.model.DomainModel
 import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.SingleObserver
@@ -28,18 +27,19 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
 
        val d = service.getMatches()
                     .subscribeOn(Schedulers.io())
+           .doOnSuccess {
+               for (match in it.matches)
+               updateDatabase(match)
+           }
                     .map {
                         it.matches
                             .map { match ->
-                                updateDatabase(match)
                                 mapper.mapMatchToDomain(match)
                         }
                     }
             .subscribe { listmapped  , e->
                 if (listmapped != null)
                        observer.onSuccess(listmapped)
-                else
-                    e.printStackTrace()
                     }
             }
 

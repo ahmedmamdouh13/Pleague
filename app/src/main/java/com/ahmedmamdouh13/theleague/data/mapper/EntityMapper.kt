@@ -23,6 +23,7 @@ class EntityMapper @Inject constructor() {
        )
     }
 
+
     fun mapDomainToEntity(domainModel: DomainModel)
     = MatchEntity(
         domainModel.id,

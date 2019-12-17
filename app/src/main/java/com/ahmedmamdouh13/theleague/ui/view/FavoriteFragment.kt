@@ -52,6 +52,7 @@ class FavoriteFragment : Fragment() {
                     placeholder_favoritescreen.visibility = View.VISIBLE
             })
         }
+
         view.matches_recyclerview_favoritescreen.itemAnimator = DefaultItemAnimator()
         view.matches_recyclerview_favoritescreen.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL,false)
         view.matches_recyclerview_favoritescreen.adapter = adapter
@@ -68,7 +69,6 @@ class FavoriteFragment : Fragment() {
             .appInjection()
             .inject(this)
         viewModel = ViewModelProviders.of(this,viewModelFactory)[MainViewModel::class.java]
-
     }
 
 }

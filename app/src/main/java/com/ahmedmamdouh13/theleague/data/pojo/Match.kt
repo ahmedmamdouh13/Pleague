@@ -8,27 +8,12 @@ class Match {
     @SerializedName("id")
     @Expose
     var id: Int = 0
-    @SerializedName("season")
-    @Expose
-    var season: Season = Season()
     @SerializedName("utcDate")
     @Expose
     var utcDate: String = ""
-    @SerializedName("status")
-    @Expose
-    var status: String = ""
-    @SerializedName("matchday")
-    @Expose
-    var matchday: Int = 0
-    @SerializedName("stage")
-    @Expose
-    var stage: String = ""
     @SerializedName("group")
     @Expose
     var group: String = ""
-    @SerializedName("lastUpdated")
-    @Expose
-    var lastUpdated: String = ""
     @SerializedName("score")
     @Expose
     var score: Score = Score()
@@ -38,8 +23,5 @@ class Match {
     @SerializedName("awayTeam")
     @Expose
     var awayTeam: AwayTeam = AwayTeam()
-    @SerializedName("referees")
-    @Expose
-    var referees: List<Referee> = listOf()
 
 }
