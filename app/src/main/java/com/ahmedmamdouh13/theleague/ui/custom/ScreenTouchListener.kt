@@ -3,6 +3,7 @@ package com.ahmedmamdouh13.theleague.ui.custom
 import android.content.res.Resources
 import android.view.MotionEvent
 import android.view.View
+import com.ahmedmamdouh13.cornertoview.touch.TouchGestures
 import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min

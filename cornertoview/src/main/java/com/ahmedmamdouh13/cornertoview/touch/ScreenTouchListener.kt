@@ -1,4 +1,4 @@
-package com.ahmedmamdouh13.theleague.ui.custom
+package com.ahmedmamdouh13.cornertoview.touch
 
 import android.content.res.Resources
 import android.view.MotionEvent

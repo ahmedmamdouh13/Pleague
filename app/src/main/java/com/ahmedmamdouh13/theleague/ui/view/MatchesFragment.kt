@@ -1,7 +1,6 @@
 package com.ahmedmamdouh13.theleague.ui.view
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,14 +16,11 @@ import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.presentaion.UiState
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesScheduleRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import com.ahmedmamdouh13.theleague.ui.model.LottieAnimationsRaw
 import com.ahmedmamdouh13.theleague.ui.util.InternetConnection
 import kotlinx.android.synthetic.main.date_in_lottie_layout.view.*
 import kotlinx.android.synthetic.main.matches_screen.*
 import kotlinx.android.synthetic.main.matches_screen.view.*
-import java.util.ArrayList
 import javax.inject.Inject
 
 class MatchesFragment : Fragment() {
@@ -41,7 +37,6 @@ class MatchesFragment : Fragment() {
     ): View? {
         init()
         val view = inflater.inflate(R.layout.matches_screen, null, false)
-            view.root_container_activitymain.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
         if (InternetConnection.isNetworkAvailable(context!!)) {
             viewModel.initMatches()
         }

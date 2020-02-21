@@ -14,8 +14,6 @@ import com.ahmedmamdouh13.theleague.R
 import com.ahmedmamdouh13.theleague.presentaion.MainViewModel
 import com.ahmedmamdouh13.theleague.ui.adapter.MatchesFavoriteRecyclerAdapter
 import com.ahmedmamdouh13.theleague.ui.application.LeagueApplication
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceHeight
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener.Companion.deviceWidth
 import kotlinx.android.synthetic.main.favorite_screen.*
 import kotlinx.android.synthetic.main.favorite_screen.view.*
 import javax.inject.Inject
@@ -35,7 +33,7 @@ class FavoriteFragment : Fragment() {
         init()
         val view = inflater.inflate(R.layout.favorite_screen, null, false)
 
-        view.favorite_screen_container_favoritefragment.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
+//        view.favorite_screen_container_favoritefragment.layoutParams = ViewGroup.LayoutParams(deviceWidth,deviceHeight)
 
         viewModel.checkToggleListener.observe(viewLifecycleOwner,viewModel.checkObserver)
         viewModel.unCheckToggleListener.observe(viewLifecycleOwner,viewModel.unCheckObserver)

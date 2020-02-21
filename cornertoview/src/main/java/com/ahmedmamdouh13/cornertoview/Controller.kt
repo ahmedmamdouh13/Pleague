@@ -12,23 +12,24 @@ import androidx.fragment.app.FragmentManager
 import androidx.transition.AutoTransition
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
-import com.ahmedmamdouh13.theleague.ui.custom.ScreenTouchListener
-import com.ahmedmamdouh13.theleague.ui.custom.TouchGestures
+import com.ahmedmamdouh13.cornertoview.touch.ScreenTouchListener
+import com.ahmedmamdouh13.cornertoview.touch.TouchGestures
 import kotlinx.android.synthetic.main.controller.view.*
 
 class Controller constructor(
     private val first: Fragment, private val second: Fragment,
-    private val fmanager: FragmentManager):
+    private val fmanager: FragmentManager
+) :
     Fragment(),
     TouchGestures {
 
-private val touchListener:ScreenTouchListener = ScreenTouchListener()
+    private val touchListener: ScreenTouchListener = ScreenTouchListener()
 
 
     lateinit var mView: View
-    var firstIcon:Int = R.drawable.ic_tab_black_24dp
-    var secondIcon:Int = R.drawable.ic_tab_black_24dp
-        override fun onCreateView(
+    var firstIcon: Int = R.drawable.ic_tab_black_24dp
+    var secondIcon: Int = R.drawable.ic_tab_black_24dp
+    override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,12 +37,23 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
         mView = inflater.inflate(R.layout.controller, null, false)
 
 
-        fmanager.beginTransaction().replace(R.id.favorite_screen_activitymain,first)
-            .replace(R.id.matches_screen_activitymain,second).commit()
+        fmanager.beginTransaction()
+            .replace(R.id.favorite_screen_activitymain, second)
+            .replace(R.id.matches_screen_activitymain, first).commit()
 
 
-        mView.matches_imageview_mainactivity.setImageDrawable(ContextCompat.getDrawable(context!!,firstIcon))
-        mView.matches_imageview_mainactivity.setImageDrawable(ContextCompat.getDrawable(context!!,secondIcon))
+        mView.matches_imageview_mainactivity.setImageDrawable(
+            ContextCompat.getDrawable(
+                context!!,
+                firstIcon
+            )
+        )
+        mView.matches_imageview_mainactivity.setImageDrawable(
+            ContextCompat.getDrawable(
+                context!!,
+                secondIcon
+            )
+        )
 
 
         touchListener.setTouchGestures(this)
@@ -65,20 +77,26 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
         percentRight: Float,
         id: Int
     ) {
-        when(id){
-            mView.favorite_imageview_mainactivity.id ->{
+        when (id) {
+            mView.favorite_imageview_mainactivity.id -> {
                 mView.left_guideline.setGuidelinePercent(percentLeft)
                 mView.top_guideline.setGuidelinePercent(percentTop)
                 mView.favorite_imageview_mainactivity.visibility = View.VISIBLE
-                mView.favorite_imageview_mainactivity.alpha =  percentTop
+                mView.favorite_imageview_mainactivity.alpha = percentTop
                 mView.matches_screen_activitymain.alpha = percentTop
+
+                mView.right_guideline.setGuidelinePercent(percentLeft + 1f)
+                mView.bottom_guideline.setGuidelinePercent(percentTop + 1f)
             }
-            else ->{
+            else -> {
                 mView.left_guideline_matches.setGuidelinePercent(percentLeft)
                 mView.top_guideline_matches.setGuidelinePercent(percentTop)
                 mView.matches_imageview_mainactivity.visibility = View.VISIBLE
-                mView.matches_imageview_mainactivity.alpha =  percentTop
+                mView.matches_imageview_mainactivity.alpha = percentTop
                 mView.favorite_screen_activitymain.alpha = percentTop
+
+                mView.right_guideline_matches.setGuidelinePercent(percentLeft + 1f)
+                mView.bottom_guideline_matches.setGuidelinePercent(percentTop + 1f)
             }
         }
 
@@ -99,6 +117,7 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
             mView.favorite_imageview_mainactivity.isEnabled = true
             mView.matches_imageview_mainactivity.isEnabled = true
         }
+
         override fun onTransitionStart(transition: Transition) {
             mView.favorite_imageview_mainactivity.isEnabled = false
             mView.matches_imageview_mainactivity.isEnabled = false
@@ -117,36 +136,55 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
 
 
     override fun expand(id: Int) {
-        when(id){
-            mView.favorite_imageview_mainactivity.id ->{
+        when (id) {
+            mView.favorite_imageview_mainactivity.id -> {
                 mView.matches_imageview_mainactivity.bringToFront()
                 if (isScrolled)
                     mView.matches_screen_activitymain.visibility = View.INVISIBLE
                 TransitionManager
-                    .beginDelayedTransition(mView.favorite_screen_container_activitymain,autoTransition)
+                    .beginDelayedTransition(
+                        mView.favorite_screen_container_activitymain,
+                        autoTransition
+                    )
                 mView.left_guideline.setGuidelinePercent(0f)
                 mView.top_guideline.setGuidelinePercent(0f)
                 mView.left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 mView.top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
 
-                transitionSettings(mView.favorite_screen_activitymain,
+
+                mView.right_guideline.setGuidelinePercent(1f)
+                mView.bottom_guideline.setGuidelinePercent(1f)
+                mView.right_guideline_matches.setGuidelinePercent(2f)
+                mView.bottom_guideline_matches.setGuidelinePercent(2f)
+
+                transitionSettings(
+                    mView.favorite_screen_activitymain,
                     mView.matches_screen_activitymain,
                     mView.favorite_imageview_mainactivity,
-                    mView.matches_imageview_mainactivity)
+                    mView.matches_imageview_mainactivity
+                )
             }
-            else ->{
+            else -> {
 
                 if (isScrolled)
                     mView.favorite_screen_activitymain.visibility = View.INVISIBLE
 
                 mView.favorite_imageview_mainactivity.bringToFront()
                 TransitionManager
-                    .beginDelayedTransition(mView.favorite_screen_container_activitymain,autoTransition)
+                    .beginDelayedTransition(
+                        mView.favorite_screen_container_activitymain,
+                        autoTransition
+                    )
 
                 mView.left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 mView.top_guideline.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
                 mView.left_guideline_matches.setGuidelinePercent(0f)
                 mView.top_guideline_matches.setGuidelinePercent(0f)
+
+                mView.right_guideline.setGuidelinePercent(2f)
+                mView.bottom_guideline.setGuidelinePercent(2f)
+                mView.right_guideline_matches.setGuidelinePercent(1f)
+                mView.bottom_guideline_matches.setGuidelinePercent(1f)
 
                 transitionSettings(
                     mView.matches_screen_activitymain,
@@ -160,11 +198,12 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
         isScrolled = false
     }
 
-    fun transitionSettings(containerExpand: View,
-                           containerCollapse: View,
-                           overlayExpand: View,
-                           overlayCollapse: View
-    ){
+    fun transitionSettings(
+        containerExpand: View,
+        containerCollapse: View,
+        overlayExpand: View,
+        overlayCollapse: View
+    ) {
         overlayCollapse.setOnTouchListener(touchListener)
         overlayExpand.setOnTouchListener(null)
         containerCollapse.bringToFront()
@@ -178,21 +217,25 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
     override fun collapse(id: Int) {
         TransitionManager
             .beginDelayedTransition(mView.favorite_screen_container_activitymain)
-        when(id){
-            mView.matches_imageview_mainactivity.id ->{
-            mView.    left_guideline.setGuidelinePercent(0f)
-            mView.    top_guideline.setGuidelinePercent(0f)
-            mView.    left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
-            mView.    top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
-            mView.    favorite_imageview_mainactivity.alpha = 0f
-            mView.    matches_imageview_mainactivity.setOnTouchListener(touchListener)
-            mView.    favorite_imageview_mainactivity.setOnTouchListener(null)
-            mView.    matches_screen_activitymain.bringToFront()
-            mView.    matches_screen_activitymain.alpha = 1f
-            mView.    matches_imageview_mainactivity.alpha = 1f
+        when (id) {
+            mView.matches_imageview_mainactivity.id -> {
+                mView.left_guideline.setGuidelinePercent(0f)
+                mView.top_guideline.setGuidelinePercent(0f)
+                mView.left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
+                mView.top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
+                mView.favorite_imageview_mainactivity.alpha = 0f
+                mView.matches_imageview_mainactivity.setOnTouchListener(touchListener)
+                mView.favorite_imageview_mainactivity.setOnTouchListener(null)
+                mView.matches_screen_activitymain.bringToFront()
+                mView.matches_screen_activitymain.alpha = 1f
+                mView.matches_imageview_mainactivity.alpha = 1f
+                mView.right_guideline.setGuidelinePercent(1f)
+                mView.bottom_guideline.setGuidelinePercent(1f)
+                mView.right_guideline_matches.setGuidelinePercent(2f)
+                mView.bottom_guideline_matches.setGuidelinePercent(2f)
 
             }
-            else ->{
+            else -> {
                 mView.left_guideline.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 mView.top_guideline.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
                 mView.left_guideline_matches.setGuidelinePercent(0f)
@@ -203,6 +246,11 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
                 mView.favorite_screen_activitymain.bringToFront()
                 mView.favorite_screen_activitymain.alpha = 1f
                 mView.matches_imageview_mainactivity.alpha = 0f
+
+                mView.right_guideline.setGuidelinePercent(2f)
+                mView.bottom_guideline.setGuidelinePercent(2f)
+                mView.right_guideline_matches.setGuidelinePercent(1f)
+                mView.bottom_guideline_matches.setGuidelinePercent(1f)
             }
         }
 
@@ -211,16 +259,42 @@ private val touchListener:ScreenTouchListener = ScreenTouchListener()
 
 
     fun setFirstCollapseIcon(@DrawableRes icon: Int) {
-        mView.matches_imageview_mainactivity.setImageDrawable(ContextCompat.getDrawable(context!!,icon))
+        firstIcon = icon
+//        mView.matches_imageview_mainactivity.setImageDrawable(
+//            ContextCompat.getDrawable(
+//                context!!,
+//                icon
+//            )
+//        )
     }
 
     fun setSecondCollapseIcon(@DrawableRes icon: Int) {
-        mView.favorite_imageview_mainactivity.setImageDrawable(ContextCompat.getDrawable(context!!,icon))
+        secondIcon = icon
+//        mView.favorite_imageview_mainactivity.setImageDrawable(
+//            ContextCompat.getDrawable(
+//                context!!,
+//                icon
+//            )
+//        )
     }
-    fun setFirstCollapseColor(@ColorRes color: Int){
-        mView.matches_imageview_mainactivity.setBackgroundColor(ContextCompat.getColor(context!!,color))
+
+    fun setFirstCollapseColor(@ColorRes color: Int) {
+        mView.matches_imageview_mainactivity.setBackgroundColor(
+            ContextCompat.getColor(
+                context!!,
+                color
+            )
+        )
     }
-    fun setSecondCollapseColor(@ColorRes color: Int){
-        mView.favorite_imageview_mainactivity.setBackgroundColor(ContextCompat.getColor(context!!,color))
+
+    fun setSecondCollapseColor(@ColorRes color: Int) {
+        mView.favorite_imageview_mainactivity.setBackgroundColor(
+            ContextCompat.getColor(
+                context!!,
+                color
+            )
+        )
     }
+
+
 }
