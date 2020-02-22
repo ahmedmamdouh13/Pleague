@@ -22,6 +22,7 @@
             android:layout_gravity="center"
             android:id="@+id/match_scheduleview_itemmatch_favorite"
             android:layout_above="@id/border"
+            android:layout_centerHorizontal="true"
 
 
 

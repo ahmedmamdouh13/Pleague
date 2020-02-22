@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.transition.AutoTransition
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
@@ -16,19 +14,20 @@ import com.ahmedmamdouh13.cornertoview.touch.ScreenTouchListener
 import com.ahmedmamdouh13.cornertoview.touch.TouchGestures
 import kotlinx.android.synthetic.main.controller.view.*
 
-class Controller constructor(
-    private val first: Fragment, private val second: Fragment,
-    private val fmanager: FragmentManager
-) :
+class Controller :
     Fragment(),
     TouchGestures {
 
     private val touchListener: ScreenTouchListener = ScreenTouchListener()
+    lateinit var first: Fragment
 
-
+    lateinit var second: Fragment
     lateinit var mView: View
-    var firstIcon: Int = R.drawable.ic_tab_black_24dp
-    var secondIcon: Int = R.drawable.ic_tab_black_24dp
+
+    private var firstIcon: Int = R.drawable.ic_tab_black_24dp
+    private var secondIcon: Int = R.drawable.ic_tab_black_24dp
+    private var firstColor: Int = android.R.color.holo_purple
+    private var secondColor: Int = android.R.color.holo_blue_light
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,24 +35,30 @@ class Controller constructor(
     ): View? {
         mView = inflater.inflate(R.layout.controller, null, false)
 
+        if (savedInstanceState != null) {
+            first = fragmentManager?.findFragmentByTag("first")!!
+            second = fragmentManager?.findFragmentByTag("second")!!
+        }
 
-        fmanager.beginTransaction()
-            .replace(R.id.favorite_screen_activitymain, second)
-            .replace(R.id.matches_screen_activitymain, first).commit()
+        fragmentManager?.beginTransaction()
+            ?.replace(R.id.matches_screen_activitymain, first, "first")
+            ?.replace(R.id.favorite_screen_activitymain, second, "second")
+            ?.commit()
 
 
         mView.matches_imageview_mainactivity.setImageDrawable(
-            ContextCompat.getDrawable(
-                context!!,
-                firstIcon
-            )
+            firstIcon.getDrawable(context!!)
         )
-        mView.matches_imageview_mainactivity.setImageDrawable(
-            ContextCompat.getDrawable(
-                context!!,
-                secondIcon
-            )
+        mView.favorite_imageview_mainactivity.setImageDrawable(
+            secondIcon.getDrawable(context!!)
         )
+
+        mView.matches_imageview_mainactivity.background
+            .setCompatTint(firstColor.getColor(context!!))
+
+        mView.favorite_imageview_mainactivity.background
+            .setCompatTint(secondColor.getColor(context!!))
+
 
 
         touchListener.setTouchGestures(this)
@@ -151,12 +156,10 @@ class Controller constructor(
                 mView.left_guideline_matches.setGuidelinePercent(ScreenTouchListener.RIGHT_LIMIT)
                 mView.top_guideline_matches.setGuidelinePercent(ScreenTouchListener.BOTTM_LIMIT)
 
-
+                mView.right_guideline_matches.setGuidelinePercent(1f + ScreenTouchListener.RIGHT_LIMIT)
+                mView.bottom_guideline_matches.setGuidelinePercent(1f + ScreenTouchListener.BOTTM_LIMIT)
                 mView.right_guideline.setGuidelinePercent(1f)
                 mView.bottom_guideline.setGuidelinePercent(1f)
-                mView.right_guideline_matches.setGuidelinePercent(2f)
-                mView.bottom_guideline_matches.setGuidelinePercent(2f)
-
                 transitionSettings(
                     mView.favorite_screen_activitymain,
                     mView.matches_screen_activitymain,
@@ -181,8 +184,8 @@ class Controller constructor(
                 mView.left_guideline_matches.setGuidelinePercent(0f)
                 mView.top_guideline_matches.setGuidelinePercent(0f)
 
-                mView.right_guideline.setGuidelinePercent(2f)
-                mView.bottom_guideline.setGuidelinePercent(2f)
+                mView.right_guideline.setGuidelinePercent(1f + ScreenTouchListener.LEFT_LIMIT)
+                mView.bottom_guideline.setGuidelinePercent(1f + ScreenTouchListener.TOP_LIMIT)
                 mView.right_guideline_matches.setGuidelinePercent(1f)
                 mView.bottom_guideline_matches.setGuidelinePercent(1f)
 
@@ -260,40 +263,18 @@ class Controller constructor(
 
     fun setFirstCollapseIcon(@DrawableRes icon: Int) {
         firstIcon = icon
-//        mView.matches_imageview_mainactivity.setImageDrawable(
-//            ContextCompat.getDrawable(
-//                context!!,
-//                icon
-//            )
-//        )
     }
 
     fun setSecondCollapseIcon(@DrawableRes icon: Int) {
         secondIcon = icon
-//        mView.favorite_imageview_mainactivity.setImageDrawable(
-//            ContextCompat.getDrawable(
-//                context!!,
-//                icon
-//            )
-//        )
     }
 
     fun setFirstCollapseColor(@ColorRes color: Int) {
-        mView.matches_imageview_mainactivity.setBackgroundColor(
-            ContextCompat.getColor(
-                context!!,
-                color
-            )
-        )
+        firstColor = color
     }
 
     fun setSecondCollapseColor(@ColorRes color: Int) {
-        mView.favorite_imageview_mainactivity.setBackgroundColor(
-            ContextCompat.getColor(
-                context!!,
-                color
-            )
-        )
+        secondColor = color
     }
 
 

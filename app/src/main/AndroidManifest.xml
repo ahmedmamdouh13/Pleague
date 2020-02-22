@@ -4,23 +4,24 @@
     package="com.ahmedmamdouh13.theleague">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.ahmedmamdouh13.theleague.ui.application.LeagueApplication"
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/pleague_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:fullBackupContent="true">
-        <activity android:name=".ui.view.MainActivity"
-            android:screenOrientation="portrait"
-            >
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".ui.view.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

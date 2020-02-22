@@ -54,13 +54,15 @@
                     android:src="@drawable/premierleague_logo"
                     />
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:text="@string/pleague"
                     android:layout_below="@id/logo_imageview_activitymain"
                     android:gravity="center"
                     android:textStyle="bold"
                     app:autoSizeTextType="uniform"
+
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="16dp"
                     android:textColor="@color/darkbackground"
                     app:layout_collapseMode="parallax"

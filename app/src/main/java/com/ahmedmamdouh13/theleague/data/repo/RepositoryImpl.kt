@@ -22,6 +22,7 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
 
     override fun getMatches(): Single<List<DomainModel>> {
 
+        println("worried")
         return object : Single<List<DomainModel>>() {
             override fun subscribeActual(observer: SingleObserver<in List<DomainModel>>) {
 
@@ -34,6 +35,7 @@ class RepositoryImpl @Inject constructor(matchesDao: MatchesDao,
                     .map {
                         it.matches
                             .map { match ->
+                                println("worried ${match.id}")
                                 mapper.mapMatchToDomain(match)
                         }
                     }

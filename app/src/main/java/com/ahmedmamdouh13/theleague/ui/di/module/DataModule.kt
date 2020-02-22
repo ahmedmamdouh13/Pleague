@@ -2,7 +2,6 @@ package com.ahmedmamdouh13.theleague.ui.di.module
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.ahmedmamdouh13.theleague.data.local.LeagueDatabase
 import com.ahmedmamdouh13.theleague.data.local.MatchesDao
 import com.ahmedmamdouh13.theleague.data.remote.LeagueService
@@ -13,7 +12,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
+import java.util.concurrent.TimeUnit
 
 @Module
 class DataModule(context: Context) {
@@ -26,7 +25,13 @@ class DataModule(context: Context) {
     @AppScope
     fun providesRetrofit(): Retrofit =
         Retrofit.Builder().baseUrl("http://api.football-data.org")
-            .client(OkHttpClient())
+            .client(OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .callTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
+                .build()
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
 
