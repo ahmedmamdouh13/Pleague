@@ -86,8 +86,8 @@ class MainActivity : AppCompatActivity() {
 
                 controller.setFirstCollapseIcon(R.drawable.ic_list_black_24dp)
                 controller.setSecondCollapseIcon(R.drawable.ic_favorite_black_24dp)
-                controller.setFirstCollapseColor(android.R.color.holo_green_light)
-                controller.setSecondCollapseColor(android.R.color.holo_red_light)
+                controller.setFirstCollapseColor(android.R.color.black)
+                controller.setSecondCollapseColor(R.color.colorAccent)
 
                 supportFragmentManager.beginTransaction()
                     .replace(
